@@ -1,10 +1,16 @@
 #!/bin/bash
+images_folder="./images"
+file_extensions='(.jpg|.jpeg)$'
+images_folder_website="/images"
+miniatures_folder_website="/output"
+is_name=true
+# make JSON
 output="{ \"images\": [\n"
-    cd ./images
-        for f in *.jpg; do
-            output=$output"\t{ \"image\": \"./images/$f\", \"miniature\": \"./output/$f\", \"name\": \"$f\" },\n"
-        done
-    cd ..
+    for f in $(ls $images_folder/* | grep -E -i $file_extensions); do
+        file=$(basename $f)
+        if $is_name; then name=$file; else name=""; fi
+        output=$output"\t{ \"image\": \"$images_folder_website/$file\", \"miniature\": \"$miniatures_folder_website/$file\", \"name\": \"$name\" },\n"
+    done
 output=${output%",\n"}
 output=$output"\n]}\n"
 echo -e $output
