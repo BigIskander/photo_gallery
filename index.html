@@ -5,10 +5,27 @@
         <title>Photo gallery.</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="gallery.css">
+        <script src="json_variable.js"></script>
     </head>
     <body>
-        
-        <script src="" async defer></script>
+        <div style="width: 100%; height: 500px; overflow-y: auto; background-color: white; border-width: 3px; border-style: solid; border-color: black;">
+            <div id="gallery" class="gallery"></div>
+        </div>
+        <script>
+            var gallery = document.getElementById("gallery");
+            for (const image of images) {
+                var miniatureDiv = document.createElement("div");
+                miniatureDiv.className = "miniature";
+                var miniatureDivDiv = document.createElement("div");
+                miniatureDivDiv.className = "miniature_inside";
+                miniatureDiv.appendChild(miniatureDivDiv);
+                var miniatureImage = new Image();
+                miniatureImage.src = image.miniature;
+                miniatureImage.style.margin = "0px";
+                miniatureDivDiv.appendChild(miniatureImage);
+                gallery.appendChild(miniatureDiv);
+            }
+        </script>
     </body>
 </html>

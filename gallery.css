@@ -1,0 +1,30 @@
+.gallery {
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap;
+}
+
+.miniature {
+    display: flex;
+    align-items: center;
+    margin: 2px;
+    width: 160px;
+    height: 160px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(166, 166, 166, 0.503);
+    background-color: rgba(218, 218, 218, 0.217);
+    cursor: pointer;
+    padding: 0px;
+}
+
+.miniature .miniature_inside {
+    text-align: center;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.miniature:hover {
+    border-color: black;
+}
