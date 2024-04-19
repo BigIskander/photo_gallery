@@ -1,3 +1,9 @@
+.gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
 .gallery_back {
     margin-bottom: 5px;
 }
@@ -28,7 +34,6 @@
 }
 
 .gallery_miniatures_wrap {
-    width: 800px;
     overflow-y: auto; 
     background-color: white; 
     border-width: 3px; 
@@ -38,7 +43,6 @@
 
 .gallery_miniatures {
     display: flex; 
-    flex-direction: row; 
 }
 
 .miniature_wrap {

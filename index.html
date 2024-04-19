@@ -10,13 +10,15 @@
     </head>
     <body>
         <div class="gallery">
-            <div id="backText" class="gallery_back">
-                <a href="JavaScript:void(0);" onclick="back()" class="gallery_back_link">Назад к списку фото.</a>
-            </div>
-            <div id="large_image" class="gallery_large_wrap">
-                <div class="gallery_large">
-                    <img id="imageLarge" class="gallery_large_image">
+            <div>
+                <div id="backText" class="gallery_back">
+                    <a href="JavaScript:void(0);" onclick="back()" class="gallery_back_link">Назад к списку фото.</a>
                 </div>
+                <div id="large_image" class="gallery_large_wrap">
+                    <div class="gallery_large">
+                        <img id="imageLarge" class="gallery_large_image">
+                    </div>
+                </div> 
             </div>
             <div class="gallery_miniatures_wrap">
                 <div id="gallery" class="gallery_miniatures"></div>
@@ -24,10 +26,13 @@
         </div>
         <script>
             var gallery = document.getElementById("gallery");
+            gallery.style.flexDirection = "row";
+            gallery.style.flexWrap = "wrap";
+            gallery.parentElement.style.width = "700px";
             var largeImage = document.getElementById("large_image");
             var backText = document.getElementById("backText");
             gallery.style.flexWrap = "wrap";
-            gallery.style.height = "800px";
+            gallery.style.height = "700px";
             largeImage.style.visibility = "hidden";
             largeImage.style.overflow = "clip";
             largeImage.style.height = "0px";
@@ -45,8 +50,11 @@
                 miniatureDivDiv.appendChild(miniatureImage);
                 // add event listener to miniature
                 miniatureDiv.addEventListener("click", () => {
+                    gallery.style.flexDirection = "column";
+                    gallery.style.flexWrap = "wrap";
                     gallery.style.removeProperty("flex-wrap");
-                    gallery.style.removeProperty("height");
+                    gallery.style.removeProperty("width");
+                    gallery.parentElement.style.removeProperty("width");
                     var imageLarge = document.getElementById("imageLarge");
                     imageLarge.src = image.image;
                     largeImage.style.visibility = "visible";
