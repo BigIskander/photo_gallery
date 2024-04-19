@@ -9,15 +9,17 @@
         <script src="json_variable.js"></script>
     </head>
     <body>
-        <div>
-            <div id="backText" style="margin-bottom: 5px;"><a href="JavaScript:void(0);" onclick="back()">Назад к списку фото.</a></div>
-            <div id="large_image" class="galleryLarge">
-                <div style="width: 100%; text-align: center;">
-                    <img id="imageLarge" src="/images/100.jpg" style="max-width: 700px; max-height: 700px; margin: 0px;">
+        <div class="gallery">
+            <div id="backText" class="gallery_back">
+                <a href="JavaScript:void(0);" onclick="back()" class="gallery_back_link">Назад к списку фото.</a>
+            </div>
+            <div id="large_image" class="gallery_large_wrap">
+                <div class="gallery_large">
+                    <img id="imageLarge" class="gallery_large_image">
                 </div>
             </div>
-            <div class="galleryWrap">
-                <div id="gallery" class="gallery"></div>
+            <div class="gallery_miniatures_wrap">
+                <div id="gallery" class="gallery_miniatures"></div>
             </div>
         </div>
         <script>
@@ -33,9 +35,9 @@
             // create miniatures
             for (const image of images) {
                 var miniatureDiv = document.createElement("div");
-                miniatureDiv.className = "miniature";
+                miniatureDiv.className = "miniature_wrap";
                 var miniatureDivDiv = document.createElement("div");
-                miniatureDivDiv.className = "miniature_inside";
+                miniatureDivDiv.className = "miniature";
                 miniatureDiv.appendChild(miniatureDivDiv);
                 var miniatureImage = new Image();
                 miniatureImage.src = image.miniature;
@@ -59,6 +61,9 @@
                 gallery.style.flexWrap = "wrap";
                 gallery.style.height = "800px";
                 backText.style.visibility = "hidden";
+            }
+            function sizes() {
+                
             }
         </script>
     </body>
