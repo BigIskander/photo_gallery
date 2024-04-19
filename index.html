@@ -3,13 +3,18 @@
     <head>
         <meta charset="utf-8">
         <title>Photo gallery.</title>
-        <meta name="description" content="">
+        <meta name="description" content="Photo gallery, vanilla JS script.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="gallery.css">
         <script src="json_variable.js"></script>
     </head>
     <body>
-        <div style="width: 100%; height: 500px; overflow-y: auto; background-color: white; border-width: 3px; border-style: solid; border-color: black;">
+        <div id="large_image" style="display: flex; align-items: center; height: 700px; width: 800px; border-style: solid; border-width: 1px; border-color: red;">
+            <div style="width: 100%; text-align: center;">
+                <img id="imageLarge" src="/images/100.jpg" style="max-width: 700px; max-height: 700px; margin: 0px;">
+            </div>
+        </div>
+        <div style="width: 800px; overflow-y: auto; background-color: white; border-width: 3px; border-style: solid; border-color: black;">
             <div id="gallery" class="gallery"></div>
         </div>
         <script>
@@ -24,6 +29,10 @@
                 miniatureImage.src = image.miniature;
                 miniatureImage.style.margin = "0px";
                 miniatureDivDiv.appendChild(miniatureImage);
+                miniatureDiv.addEventListener("click", () => {
+                    var imageLarge = document.getElementById("imageLarge");
+                    imageLarge.src = image.image;
+                });
                 gallery.appendChild(miniatureDiv);
             }
         </script>
