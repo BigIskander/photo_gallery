@@ -16,6 +16,13 @@
     border-color: grey;
 }
 
+.gallery_large_hide {
+    visibility: hidden;
+    overflow: clip;
+    width: 0px;
+    height: 0px;
+}
+
 .gallery_back {
     margin: 5px;
 }
@@ -54,8 +61,16 @@
 
 .gallery_miniatures {
     display: flex; 
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    height: 700px;
+    width: 830px;
+}
+
+.gallery_miniatures_vertical { 
+    width: 180px;
+    height: 700px;
 }
 
 .miniature_wrap {

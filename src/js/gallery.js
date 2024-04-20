@@ -1,19 +1,10 @@
 // some variables
 
-
 var gallery = document.getElementById("gallery");
+var galleryMiniatures = gallery.querySelector(".gallery_miniatures");
 
-gallery.style.flexDirection = "row";
-gallery.style.flexWrap = "wrap";
-gallery.parentElement.style.width = (700 + 160 + (2 * 2) + 16) + "px";
-
-var largeImage = document.getElementById("getLargePart");
-largeImage.style.visibility = "hidden";
-largeImage.style.overflow = "clip";
-largeImage.style.width = "0px";
-
-gallery.style.flexWrap = "wrap";
-gallery.style.height = "700px";
+var galleryLarge = gallery.querySelector(".gallery_large");
+galleryLarge.className = "gallery_large gallery_large_hide";
 
 // create miniatures
 for (const image of images) {
@@ -28,25 +19,17 @@ for (const image of images) {
     miniatureDivDiv.appendChild(miniatureImage);
     // add event listener to miniature
     miniatureDiv.addEventListener("click", () => {
-        // gallery.style.flexDirection = "column";
-        // gallery.style.removeProperty("flex-wrap");
-        gallery.style.width = 160 + (2 * 2) + 8 + "px";
-        // gallery.style.removeProperty("width");
-        gallery.parentElement.style.removeProperty("width");
-        var imageLarge = document.getElementById("imageLarge");
+        galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical"
+        var imageLarge = galleryLarge.querySelector(".gallery_large_image");
         imageLarge.src = image.image;
-        largeImage.style.visibility = "visible";
-        largeImage.style.removeProperty("width");
+        galleryLarge.className = "gallery_large";
     });
-    gallery.appendChild(miniatureDiv);
+    galleryMiniatures.appendChild(miniatureDiv);
 }
 
 function back() {
-    largeImage.style.visibility = "hidden";
-    largeImage.style.width = "0px";
-    gallery.style.flexDirection = "row";
-    gallery.style.flexWrap = "wrap";
-    gallery.parentElement.style.width = (700 + 160 + (2 * 2) + 16) + "px";
+    galleryLarge.className = "gallery_large gallery_large_hide";
+    galleryMiniatures.className = "gallery_miniatures"
 }
 
 function resize() {
