@@ -6,6 +6,8 @@ var galleryMiniatures = gallery.querySelector(".gallery_miniatures");
 var galleryLarge = gallery.querySelector(".gallery_large");
 galleryLarge.className = "gallery_large gallery_large_hide";
 
+var imageLarge = galleryLarge.querySelector(".gallery_large_image");
+
 // create miniatures
 for (const image of images) {
     var miniatureDiv = document.createElement("div");
@@ -19,10 +21,17 @@ for (const image of images) {
     miniatureDivDiv.appendChild(miniatureImage);
     // add event listener to miniature
     miniatureDiv.addEventListener("click", () => {
-        galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical"
-        var imageLarge = galleryLarge.querySelector(".gallery_large_image");
         imageLarge.src = image.image;
         galleryLarge.className = "gallery_large";
+        console.log(galleryMiniatures.offsetTop);
+        if(galleryMiniatures.offsetTop >= 650) {
+            if(gallery.getBoundingClientRect().width >= 850)
+                galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
+            else
+                galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
+        } else {
+            galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
+        }
     });
     galleryMiniatures.appendChild(miniatureDiv);
 }
@@ -32,9 +41,15 @@ function back() {
     galleryMiniatures.className = "gallery_miniatures"
 }
 
-function resize() {
-    // var ok = document.getElementById("topElement");
-    // console.log(ok.getBoundingClientRect());
-}
-
-// window.addEventListener("resize", resize);
+window.addEventListener("resize", () => {
+    if(galleryLarge.className == "gallery_large") {
+        if(galleryMiniatures.offsetTop >= 650) { 
+            if(gallery.getBoundingClientRect().width >= 850)
+                galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
+            else
+                galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
+        } else {
+            galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
+        }
+    }
+});
