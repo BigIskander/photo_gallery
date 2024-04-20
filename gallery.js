@@ -1,8 +1,11 @@
+// some variables
+
+
 var gallery = document.getElementById("gallery");
 
 gallery.style.flexDirection = "row";
 gallery.style.flexWrap = "wrap";
-gallery.parentElement.style.width = "700px";
+gallery.parentElement.style.width = (700 + 160 + (2 * 2) + 16) + "px";
 
 var largeImage = document.getElementById("getLargePart");
 largeImage.style.visibility = "hidden";
@@ -21,13 +24,14 @@ for (const image of images) {
     miniatureDiv.appendChild(miniatureDivDiv);
     var miniatureImage = new Image();
     miniatureImage.src = image.miniature;
-    miniatureImage.style.margin = "0px";
+    miniatureImage.className = "miniature_image";
     miniatureDivDiv.appendChild(miniatureImage);
     // add event listener to miniature
     miniatureDiv.addEventListener("click", () => {
-        gallery.style.flexDirection = "column";
-        gallery.style.removeProperty("flex-wrap");
-        gallery.style.removeProperty("width");
+        // gallery.style.flexDirection = "column";
+        // gallery.style.removeProperty("flex-wrap");
+        gallery.style.width = 160 + (2 * 2) + 8 + "px";
+        // gallery.style.removeProperty("width");
         gallery.parentElement.style.removeProperty("width");
         var imageLarge = document.getElementById("imageLarge");
         imageLarge.src = image.image;
@@ -42,9 +46,12 @@ function back() {
     largeImage.style.width = "0px";
     gallery.style.flexDirection = "row";
     gallery.style.flexWrap = "wrap";
-    gallery.style.width = "700px";
+    gallery.parentElement.style.width = (700 + 160 + (2 * 2) + 16) + "px";
 }
 
-function sizes() {
-    
+function resize() {
+    // var ok = document.getElementById("topElement");
+    // console.log(ok.getBoundingClientRect());
 }
+
+// window.addEventListener("resize", resize);
