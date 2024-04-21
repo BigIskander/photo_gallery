@@ -10,8 +10,12 @@ var imageLarge = galleryLarge.querySelector(".gallery_large_image");
 
 var galleryMinWidth = 650;
 var galleryMaxWidth = 850;
+var galleryHeight = 700;
+var gallerySelectedMiniatureSize = 164; // miniature cube + border
 
 var prevSelectedMiniature = undefined;
+var isPrevLayoutLarge = false;
+var overscrollCorrection = 5;
 
 // create miniatures
 for (const image of images) {
@@ -35,13 +39,18 @@ for (const image of images) {
         galleryLarge.className = "gallery_large";
         // change gallery layout
         if((galleryMiniatures.offsetTop - gallery.offsetTop) >= galleryMinWidth) {
-            if(gallery.getBoundingClientRect().width >= galleryMaxWidth)
+            if(gallery.getBoundingClientRect().width >= galleryMaxWidth) {
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
-            else
+                correctPositionVertical();
+            } else {
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
+                correctPositionGorizontal();
+            }
         } else {
             galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
+            correctPositionVertical();
         }
+        isPrevLayoutLarge = true;
     });
     galleryMiniatures.appendChild(miniatureDiv);
 }
@@ -52,6 +61,33 @@ function back() {
     prevSelectedPhoto = undefined;
     galleryLarge.className = "gallery_large gallery_large_hide";
     galleryMiniatures.className = "gallery_miniatures";
+    isPrevLayoutLarge = false;
+}
+
+function correctPositionVertical() {
+    var miniatureRelativePosition = prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
+    var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
+    if(miniatureRelativePosition - miniaturesScrolled < 0) {
+        galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
+    } else if(miniatureRelativePosition - miniaturesScrolled >= galleryHeight - gallerySelectedMiniatureSize) {
+        if(isPrevLayoutLarge)
+            galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryHeight + gallerySelectedMiniatureSize);
+        else
+            galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize * 2 - overscrollCorrection);
+    }
+}
+
+function correctPositionGorizontal() {
+    var miniatureRelativePosition = prevSelectedMiniature.offsetLeft - galleryMiniatures.offsetLeft;
+    var miniaturesScrolled = galleryMiniatures.parentElement.scrollLeft;
+    if(miniatureRelativePosition - miniaturesScrolled < 0) {
+        galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
+    } else if(miniatureRelativePosition - miniaturesScrolled >= galleryMinWidth - gallerySelectedMiniatureSize) {
+        if(isPrevLayoutLarge)
+            galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryMinWidth + gallerySelectedMiniatureSize);
+        else
+            galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize * 2 - overscrollCorrection);
+    }
 }
 
 window.addEventListener("resize", () => {
@@ -61,37 +97,16 @@ window.addEventListener("resize", () => {
             if(gallery.getBoundingClientRect().width >= galleryMaxWidth) {
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
                 galleryMiniatures.parentElement.scrollTop = scrollPostion;
-                // correcting position of element
-                var miniatureRelativePosition = prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
-                var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
-                if(miniatureRelativePosition - miniaturesScrolled < 0) {
-                    galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
-                } else if(miniatureRelativePosition - miniaturesScrolled >= 700 - 164) {
-                    galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - 700 + 164);
-                }
+                correctPositionVertical();
             } else {
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
                 galleryMiniatures.parentElement.scrollLeft = scrollPostion;
-                // correcting position of element
-                var miniatureRelativePosition = prevSelectedMiniature.offsetLeft - galleryMiniatures.offsetLeft;
-                var miniaturesScrolled = galleryMiniatures.parentElement.scrollLeft;
-                if(miniatureRelativePosition - miniaturesScrolled < 0) {
-                    galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
-                } else if(miniatureRelativePosition - miniaturesScrolled >= galleryMinWidth - 164) {
-                    galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryMinWidth + 164);
-                }
+                correctPositionGorizontal();
             }
         } else {
             galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
             galleryMiniatures.parentElement.scrollTop = scrollPostion;
-            // correcting position of element
-            var miniatureRelativePosition = prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
-            var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
-            if(miniatureRelativePosition - miniaturesScrolled < 0) {
-                galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
-            } else if(miniatureRelativePosition - miniaturesScrolled >= 700 - 164) {
-                galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - 700 + 164);
-            }
+            correctPositionVertical();
         }
     }
 });
