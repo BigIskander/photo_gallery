@@ -8,9 +8,14 @@ galleryLarge.className = "gallery_large gallery_large_hide";
 
 var imageLarge = galleryLarge.querySelector(".gallery_large_image");
 
+var galleryMinWidth = 650;
+var galleryMaxWidth = 850;
+
+var prevSelectedMiniature = undefined;
+
 // create miniatures
 for (const image of images) {
-    var miniatureDiv = document.createElement("div");
+    const miniatureDiv = document.createElement("div");
     miniatureDiv.className = "miniature_wrap";
     var miniatureDivDiv = document.createElement("div");
     miniatureDivDiv.className = "miniature";
@@ -21,11 +26,16 @@ for (const image of images) {
     miniatureDivDiv.appendChild(miniatureImage);
     // add event listener to miniature
     miniatureDiv.addEventListener("click", () => {
+        if(prevSelectedMiniature) 
+            prevSelectedMiniature.className = "miniature_wrap";
+        prevSelectedMiniature = miniatureDiv;
+        miniatureDiv.className = "miniature_wrap miniature_wrap_selected";
+        // change large image
         imageLarge.src = image.image;
         galleryLarge.className = "gallery_large";
-        console.log(galleryMiniatures.offsetTop);
-        if(galleryMiniatures.offsetTop >= 650) {
-            if(gallery.getBoundingClientRect().width >= 850)
+        // change gallery layout
+        if(galleryMiniatures.offsetTop >= galleryMinWidth) {
+            if(gallery.getBoundingClientRect().width >= galleryMaxWidth)
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
             else
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
@@ -37,14 +47,17 @@ for (const image of images) {
 }
 
 function back() {
+    if(prevSelectedMiniature) 
+        prevSelectedMiniature.className = "miniature_wrap";
+    prevSelectedPhoto = undefined;
     galleryLarge.className = "gallery_large gallery_large_hide";
-    galleryMiniatures.className = "gallery_miniatures"
+    galleryMiniatures.className = "gallery_miniatures";
 }
 
 window.addEventListener("resize", () => {
     if(galleryLarge.className == "gallery_large") {
-        if(galleryMiniatures.offsetTop >= 650) { 
-            if(gallery.getBoundingClientRect().width >= 850)
+        if(galleryMiniatures.offsetTop >= galleryMinWidth) { 
+            if(gallery.getBoundingClientRect().width >= galleryMaxWidth)
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
             else
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";

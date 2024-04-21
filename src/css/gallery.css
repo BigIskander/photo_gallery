@@ -100,6 +100,11 @@
     padding: 0px;
 }
 
+.miniature_wrap_selected {
+    border-color: black;
+    border-width: 2px;
+}
+
 .miniature_wrap:hover {
     border-color: black;
 }
