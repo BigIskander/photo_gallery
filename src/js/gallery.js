@@ -13,6 +13,13 @@ var galleryMaxWidth = 850;
 var galleryHeight = 700;
 var gallerySelectedMiniatureSize = 164; // miniature cube + border
 
+if(window.matchMedia("(max-width: 850px)").matches) {
+    var galleryMinWidth = 325;
+    var galleryMaxWidth = 425;
+    var galleryHeight = 350;
+    var gallerySelectedMiniatureSize = 82; // miniature cube + border
+}
+
 var prevSelectedMiniature = undefined;
 var isPrevLayoutLarge = false;
 var overscrollCorrection = 5;
@@ -84,13 +91,28 @@ function correctPositionGorizontal() {
         galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
     } else if(miniatureRelativePosition - miniaturesScrolled >= galleryMinWidth - gallerySelectedMiniatureSize) {
         if(isPrevLayoutLarge)
+        {
             galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryMinWidth + gallerySelectedMiniatureSize);
+            if(window.matchMedia("(max-width: 850px)").matches)
+                galleryMiniatures.parentElement.scrollLeft = galleryMiniatures.parentElement.scrollLeft + 3
+        }
         else
             galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize * 2 - overscrollCorrection);
     }
 }
 
 window.addEventListener("resize", () => {
+    if(window.matchMedia("(max-width: 850px)").matches) {
+        galleryMinWidth = 325;
+        galleryMaxWidth = 425;
+        galleryHeight = 350;
+        gallerySelectedMiniatureSize = 82; // miniature cube + border
+    } else {
+        galleryMinWidth = 650;
+        galleryMaxWidth = 850;
+        galleryHeight = 700;
+        gallerySelectedMiniatureSize = 164; // miniature cube + border
+    }
     if(galleryLarge.className == "gallery_large") {
         var scrollPostion = (galleryMiniatures.parentElement.scrollTop > 0) ? galleryMiniatures.parentElement.scrollTop : galleryMiniatures.parentElement.scrollLeft;
         if((galleryMiniatures.offsetTop - gallery.offsetTop) >= galleryMinWidth) { 
