@@ -14,8 +14,8 @@ var galleryHeight = 700;
 var gallerySelectedMiniatureSize = 164; // miniature cube + border
 
 if(window.matchMedia("(max-width: 850px)").matches) {
-    var galleryMinWidth = 325;
-    var galleryMaxWidth = 425;
+    var galleryMinWidth = 326;
+    var galleryMaxWidth = 426;
     var galleryHeight = 350;
     var gallerySelectedMiniatureSize = 82; // miniature cube + border
 }
@@ -103,8 +103,8 @@ function correctPositionGorizontal() {
 
 window.addEventListener("resize", () => {
     if(window.matchMedia("(max-width: 850px)").matches) {
-        galleryMinWidth = 325;
-        galleryMaxWidth = 425;
+        galleryMinWidth = 326;
+        galleryMaxWidth = 426;
         galleryHeight = 350;
         gallerySelectedMiniatureSize = 82; // miniature cube + border
     } else {
