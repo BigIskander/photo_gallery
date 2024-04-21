@@ -56,13 +56,18 @@ function back() {
 
 window.addEventListener("resize", () => {
     if(galleryLarge.className == "gallery_large") {
+        var scrollPostion = (galleryMiniatures.parentElement.scrollTop > 0) ? galleryMiniatures.parentElement.scrollTop : galleryMiniatures.parentElement.scrollLeft;
         if(galleryMiniatures.offsetTop >= galleryMinWidth) { 
-            if(gallery.getBoundingClientRect().width >= galleryMaxWidth)
+            if(gallery.getBoundingClientRect().width >= galleryMaxWidth) {
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
-            else
+                galleryMiniatures.parentElement.scrollTop = scrollPostion;
+            } else {
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
+                galleryMiniatures.parentElement.scrollLeft = scrollPostion;
+            }
         } else {
             galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
+            galleryMiniatures.parentElement.scrollTop = scrollPostion;
         }
     }
 });
