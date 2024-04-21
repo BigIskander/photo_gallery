@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     width: 80%;
-    /* background-color: black; */
 }
 
 .gallery {
@@ -152,7 +151,6 @@
     }
     
     .gallery_miniatures_vertical { 
-        overflow-x: hidden;
         width: 106px;
         height: 350px;
     }

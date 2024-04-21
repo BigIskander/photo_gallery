@@ -115,7 +115,6 @@ window.addEventListener("resize", () => {
     }
     if(galleryLarge.className == "gallery_large") {
         var scrollPostion = (galleryMiniatures.parentElement.scrollTop > 0) ? galleryMiniatures.parentElement.scrollTop : galleryMiniatures.parentElement.scrollLeft;
-        console.log(gallery.parentElement.getBoundingClientRect().width * 0.98)
         if((galleryMiniatures.offsetTop - gallery.offsetTop) >= galleryMinWidth) { 
             if(gallery.getBoundingClientRect().width >= galleryMaxWidth) {
                 galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
