@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     width: 80%;
+    /* background-color: black; */
 }
 
 .gallery {
@@ -126,8 +127,14 @@
 
 @media (max-width: 850px) {
     .gallery {
-        max-width: 425px;
+        max-width: 442px;
         min-width: 325px;
+    }
+
+    @media (min-width: 582px) {
+        .gallery{
+            flex-wrap: nowrap;
+        }
     }
 
     .gallery_large_container_wrap {
@@ -145,13 +152,15 @@
     }
     
     .gallery_miniatures_vertical { 
-        width: 90px;
+        overflow-x: hidden;
+        width: 106px;
         height: 350px;
     }
     
     .gallery_miniatures_gorizontal {
         width: 325px;
         height: 90px;
+        flex-direction: column;
     }
 
     .miniature_wrap {
