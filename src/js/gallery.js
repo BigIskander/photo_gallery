@@ -64,12 +64,15 @@ for (const image of images) {
 }
 
 function back() {
-    if(prevSelectedMiniature) 
-        prevSelectedMiniature.className = "miniature_wrap";
     prevSelectedPhoto = undefined;
     galleryLarge.className = "gallery_large gallery_large_hide";
     galleryMiniatures.className = "gallery_miniatures";
     isPrevLayoutLarge = false;
+    var miniatureRelativePosition = prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
+    var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
+    galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize - overscrollCorrection);
+    if(prevSelectedMiniature) 
+        prevSelectedMiniature.className = "miniature_wrap";
 }
 
 function correctPositionVertical() {
