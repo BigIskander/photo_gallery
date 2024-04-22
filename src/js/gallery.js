@@ -12,8 +12,9 @@ var galleryMinWidth = 650;
 var galleryMaxWidth = 850;
 var galleryHeight = 700;
 var gallerySelectedMiniatureSize = 164; // miniature cube + border
+var galleryMediaSwich = "(max-width: 850px), (max-height: 875px)";
 
-if(window.matchMedia("(max-width: 850px)").matches) {
+if(window.matchMedia(galleryMediaSwich).matches) {
     var galleryMinWidth = 325;
     var galleryMaxWidth = 442;
     var galleryHeight = 350;
@@ -93,7 +94,7 @@ function correctPositionGorizontal() {
         if(isPrevLayoutLarge)
         {
             galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryMinWidth + gallerySelectedMiniatureSize);
-            if(window.matchMedia("(max-width: 850px)").matches)
+            if(window.matchMedia(galleryMediaSwich).matches)
                 galleryMiniatures.parentElement.scrollLeft = galleryMiniatures.parentElement.scrollLeft + 3
         }
         else
@@ -102,7 +103,7 @@ function correctPositionGorizontal() {
 }
 
 window.addEventListener("resize", () => {
-    if(window.matchMedia("(max-width: 850px)").matches) {
+    if(window.matchMedia(galleryMediaSwich).matches) {
         galleryMinWidth = 325;
         galleryMaxWidth = 442;
         galleryHeight = 350;

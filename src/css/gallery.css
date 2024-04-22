@@ -124,7 +124,7 @@
     max-height: 150px;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 850px), (max-height: 875px) {
     .gallery {
         max-width: 442px;
         min-width: 325px;
