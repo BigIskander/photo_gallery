@@ -45,19 +45,20 @@ for (const image of images) {
         // change large image
         imageLarge.src = image.image;
         galleryLarge.className = "gallery_large";
-        // change gallery layout
-        if((galleryMiniatures.offsetTop - gallery.offsetTop) >= galleryMinWidth) {
-            if(gallery.getBoundingClientRect().width >= galleryMaxWidth) {
-                galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
-                correctPositionVertical();
-            } else {
-                galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
-                correctPositionGorizontal();
-            }
-        } else {
-            galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
-            correctPositionVertical();
-        }
+        // change gallery layout gallery_miniatures_side
+        galleryMiniatures.className = "gallery_miniatures gallery_miniatures_side";
+        // if((galleryMiniatures.offsetTop - gallery.offsetTop) >= galleryMinWidth) {
+        //     if(gallery.getBoundingClientRect().width >= galleryMaxWidth) {
+        //         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
+        //         correctPositionVertical();
+        //     } else {
+        //         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
+        //         correctPositionGorizontal();
+        //     }
+        // } else {
+        //     galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
+        //     correctPositionVertical();
+        // }
         isPrevLayoutLarge = true;
     });
     galleryMiniatures.appendChild(miniatureDiv);
@@ -106,33 +107,33 @@ function correctPositionGorizontal() {
 }
 
 window.addEventListener("resize", () => {
-    if(window.matchMedia(galleryMediaSwich).matches) {
-        galleryMinWidth = 325;
-        galleryMaxWidth = 442;
-        galleryHeight = 350;
-        gallerySelectedMiniatureSize = 82; // miniature cube + border
-    } else {
-        galleryMinWidth = 650;
-        galleryMaxWidth = 850;
-        galleryHeight = 700;
-        gallerySelectedMiniatureSize = 164; // miniature cube + border
-    }
-    if(galleryLarge.className == "gallery_large") {
-        var scrollPostion = (galleryMiniatures.parentElement.scrollTop > 0) ? galleryMiniatures.parentElement.scrollTop : galleryMiniatures.parentElement.scrollLeft;
-        if((galleryMiniatures.offsetTop - gallery.offsetTop) >= galleryMinWidth) { 
-            if(gallery.getBoundingClientRect().width >= galleryMaxWidth) {
-                galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
-                galleryMiniatures.parentElement.scrollTop = scrollPostion;
-                correctPositionVertical();
-            } else {
-                galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
-                galleryMiniatures.parentElement.scrollLeft = scrollPostion;
-                correctPositionGorizontal();
-            }
-        } else {
-            galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
-            galleryMiniatures.parentElement.scrollTop = scrollPostion;
-            correctPositionVertical();
-        }
-    }
+    // if(window.matchMedia(galleryMediaSwich).matches) {
+    //     galleryMinWidth = 325;
+    //     galleryMaxWidth = 442;
+    //     galleryHeight = 350;
+    //     gallerySelectedMiniatureSize = 82; // miniature cube + border
+    // } else {
+    //     galleryMinWidth = 650;
+    //     galleryMaxWidth = 850;
+    //     galleryHeight = 700;
+    //     gallerySelectedMiniatureSize = 164; // miniature cube + border
+    // }
+    // if(galleryLarge.className == "gallery_large") {
+    //     var scrollPostion = (galleryMiniatures.parentElement.scrollTop > 0) ? galleryMiniatures.parentElement.scrollTop : galleryMiniatures.parentElement.scrollLeft;
+    //     if((galleryMiniatures.offsetTop - gallery.offsetTop) >= galleryMinWidth) { 
+    //         if(gallery.getBoundingClientRect().width >= galleryMaxWidth) {
+    //             galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
+    //             galleryMiniatures.parentElement.scrollTop = scrollPostion;
+    //             correctPositionVertical();
+    //         } else {
+    //             galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
+    //             galleryMiniatures.parentElement.scrollLeft = scrollPostion;
+    //             correctPositionGorizontal();
+    //         }
+    //     } else {
+    //         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
+    //         galleryMiniatures.parentElement.scrollTop = scrollPostion;
+    //         correctPositionVertical();
+    //     }
+    // }
 });
