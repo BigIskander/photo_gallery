@@ -12,13 +12,17 @@ var galleryMinWidth = 650;
 var galleryMaxWidth = 850;
 var galleryHeight = 700;
 var gallerySelectedMiniatureSize = 164; // miniature cube + border
-var galleryMediaSwich = "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)";
+var galleryMediaSwichSize = "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)";
+var galleryMediaSwichLayout = "(max-width: 1122px)";
+var galleryMediaSmallSwichLayout = "(max-width: 581px)";
+var isSmallLayout = false;
 
-if(window.matchMedia(galleryMediaSwich).matches) {
+if(window.matchMedia(galleryMediaSwichSize).matches) {
     var galleryMinWidth = 325;
     var galleryMaxWidth = 442;
     var galleryHeight = 350;
     var gallerySelectedMiniatureSize = 82; // miniature cube + border
+    var isSmallLayout = true;
 }
 
 var prevSelectedMiniature = undefined;
@@ -47,18 +51,11 @@ for (const image of images) {
         galleryLarge.className = "gallery_large";
         // change gallery layout gallery_miniatures_side
         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_side";
-        // if((galleryMiniatures.offsetTop - gallery.offsetTop) >= galleryMinWidth) {
-        //     if(gallery.getBoundingClientRect().width >= galleryMaxWidth) {
-        //         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
-        //         correctPositionVertical();
-        //     } else {
-        //         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
-        //         correctPositionGorizontal();
-        //     }
-        // } else {
-        //     galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
-        //     correctPositionVertical();
-        // }
+        if((!isSmallLayout && window.matchMedia(galleryMediaSwichLayout).matches) || (isSmallLayout && window.matchMedia(galleryMediaSmallSwichLayout).matches)) {
+                correctPositionGorizontal();
+        } else {
+                correctPositionVertical();
+        }
         isPrevLayoutLarge = true;
     });
     galleryMiniatures.appendChild(miniatureDiv);
@@ -98,7 +95,7 @@ function correctPositionGorizontal() {
         if(isPrevLayoutLarge)
         {
             galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryMinWidth + gallerySelectedMiniatureSize);
-            if(window.matchMedia(galleryMediaSwich).matches)
+            if(window.matchMedia(galleryMediaSwichSize).matches)
                 galleryMiniatures.parentElement.scrollLeft = galleryMiniatures.parentElement.scrollLeft + 3
         }
         else
@@ -107,33 +104,22 @@ function correctPositionGorizontal() {
 }
 
 window.addEventListener("resize", () => {
-    // if(window.matchMedia(galleryMediaSwich).matches) {
-    //     galleryMinWidth = 325;
-    //     galleryMaxWidth = 442;
-    //     galleryHeight = 350;
-    //     gallerySelectedMiniatureSize = 82; // miniature cube + border
-    // } else {
-    //     galleryMinWidth = 650;
-    //     galleryMaxWidth = 850;
-    //     galleryHeight = 700;
-    //     gallerySelectedMiniatureSize = 164; // miniature cube + border
-    // }
-    // if(galleryLarge.className == "gallery_large") {
-    //     var scrollPostion = (galleryMiniatures.parentElement.scrollTop > 0) ? galleryMiniatures.parentElement.scrollTop : galleryMiniatures.parentElement.scrollLeft;
-    //     if((galleryMiniatures.offsetTop - gallery.offsetTop) >= galleryMinWidth) { 
-    //         if(gallery.getBoundingClientRect().width >= galleryMaxWidth) {
-    //             galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
-    //             galleryMiniatures.parentElement.scrollTop = scrollPostion;
-    //             correctPositionVertical();
-    //         } else {
-    //             galleryMiniatures.className = "gallery_miniatures gallery_miniatures_gorizontal";
-    //             galleryMiniatures.parentElement.scrollLeft = scrollPostion;
-    //             correctPositionGorizontal();
-    //         }
-    //     } else {
-    //         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_vertical";
-    //         galleryMiniatures.parentElement.scrollTop = scrollPostion;
-    //         correctPositionVertical();
-    //     }
-    // }
+    if((!isSmallLayout && window.matchMedia(galleryMediaSwichLayout).matches) || (isSmallLayout && window.matchMedia(galleryMediaSmallSwichLayout).matches)) {
+        correctPositionGorizontal();
+    } else {
+        correctPositionVertical();
+    }
+    if(window.matchMedia(galleryMediaSwichSize).matches) {
+        galleryMinWidth = 325;
+        galleryMaxWidth = 442;
+        galleryHeight = 350;
+        gallerySelectedMiniatureSize = 82; // miniature cube + border
+        isSmallLayout = true;
+    } else {
+        galleryMinWidth = 650;
+        galleryMaxWidth = 850;
+        galleryHeight = 700;
+        gallerySelectedMiniatureSize = 164; // miniature cube + border
+        isSmallLayout = false;
+    }
 });
