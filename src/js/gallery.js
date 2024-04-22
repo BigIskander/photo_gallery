@@ -12,7 +12,7 @@ var galleryMinWidth = 650;
 var galleryMaxWidth = 850;
 var galleryHeight = 700;
 var gallerySelectedMiniatureSize = 164; // miniature cube + border
-var galleryMediaSwich = "(max-width: 850px), (max-height: 875px)";
+var galleryMediaSwich = "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)";
 
 if(window.matchMedia(galleryMediaSwich).matches) {
     var galleryMinWidth = 325;
