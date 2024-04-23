@@ -17,6 +17,7 @@ var galleryMediaSwichSize = "(max-width: 850px), (max-height: 750px), (max-width
 var galleryMediaSwichLayout = "(max-width: 1122px)";
 var galleryMediaSmallSwichLayout = "(max-width: 581px)";
 var isSmallLayout = false;
+var currentScroll = 0;
 
 if(window.matchMedia(galleryMediaSwichSize).matches) {
     var galleryMinWidth = 325;
@@ -25,6 +26,8 @@ if(window.matchMedia(galleryMediaSwichSize).matches) {
     var gallerySelectedMiniatureSize = 82; // miniature cube + border
     var isSmallLayout = true;
 }
+
+var isPreviousSmallLayout = isSmallLayout;
 
 var prevSelectedMiniature = undefined;
 var isPrevLayoutLarge = false;
@@ -54,9 +57,11 @@ for (const image of images) {
         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_side";
         bottomText.className = "gallery_bottom_text gallery_bottom_text_large";
         if(isLayoutGorizontal()) {
-                correctPositionGorizontal();
+            correctPositionGorizontal();
+            currentScroll = galleryMiniatures.parentElement.scrollLeft;
         } else {
-                correctPositionVertical();
+            correctPositionVertical();
+            currentScroll = galleryMiniatures.parentElement.scrollTop;
         }
         isPrevLayoutLarge = true;
     });
@@ -126,9 +131,21 @@ window.addEventListener("resize", () => {
         gallerySelectedMiniatureSize = 164; // miniature cube + border
         isSmallLayout = false;
     }
-    if(isLayoutGorizontal()) {
-        correctPositionGorizontal();
-    } else {
-        correctPositionVertical();
+    if(isPrevLayoutLarge) {
+        if(!isPreviousSmallLayout && isSmallLayout) {
+            currentScroll = currentScroll / 2;
+        } else if(isPreviousSmallLayout && !isSmallLayout) {
+            currentScroll = currentScroll * 2;
+        }
+        if(isLayoutGorizontal()) {    
+            galleryMiniatures.parentElement.scrollLeft = currentScroll;
+            correctPositionGorizontal();
+            currentScroll = galleryMiniatures.parentElement.scrollLeft;
+        } else {
+            galleryMiniatures.parentElement.scrollTop = currentScroll;
+            correctPositionVertical();
+            currentScroll = galleryMiniatures.parentElement.scrollTop;
+        }
     }
+    isPreviousSmallLayout = isSmallLayout;
 });
