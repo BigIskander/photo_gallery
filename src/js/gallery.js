@@ -13,6 +13,7 @@ var galleryMinWidth = 650;
 var galleryMaxWidth = 850;
 var galleryHeight = 700;
 var gallerySelectedMiniatureSize = 164; // miniature cube + border
+var overscrollCorrection = 5;
 var galleryMediaSwichSize = "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)";
 var galleryMediaSwichLayout = "(max-width: 1122px)";
 var galleryMediaSmallSwichLayout = "(max-width: 581px)";
@@ -25,13 +26,13 @@ if(window.matchMedia(galleryMediaSwichSize).matches) {
     var galleryHeight = 350;
     var gallerySelectedMiniatureSize = 82; // miniature cube + border
     var isSmallLayout = true;
+    var overscrollCorrection = 9;
 }
 
 var isPreviousSmallLayout = isSmallLayout;
 
 var prevSelectedMiniature = undefined;
 var isPrevLayoutLarge = false;
-var overscrollCorrection = 5;
 
 // create miniatures
 for (const image of images) {
@@ -90,30 +91,34 @@ function back() {
 function correctPositionVertical() {
     var miniatureRelativePosition = prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
+    if(!isPrevLayoutLarge || (isPreviousSmallLayout != isSmallLayout)) {
+        galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize * 2 - overscrollCorrection);
+        return;
+    }
     if(miniatureRelativePosition - miniaturesScrolled < 0) {
         galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
-    } else if(miniatureRelativePosition - miniaturesScrolled >= galleryHeight - gallerySelectedMiniatureSize) {
-        if(isPrevLayoutLarge)
-            galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryHeight + gallerySelectedMiniatureSize);
-        else
-            galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize * 2 - overscrollCorrection);
+        return;
+    } 
+    if(miniatureRelativePosition - miniaturesScrolled >= galleryHeight - gallerySelectedMiniatureSize) {
+        galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryHeight + gallerySelectedMiniatureSize);
     }
 }
 
 function correctPositionGorizontal() {
     var miniatureRelativePosition = prevSelectedMiniature.offsetLeft - galleryMiniatures.offsetLeft;
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollLeft;
+    if(!isPrevLayoutLarge || (isPreviousSmallLayout != isSmallLayout)) {
+        galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize * 2 - overscrollCorrection);
+        return;
+    }
     if(miniatureRelativePosition - miniaturesScrolled < 0) {
         galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
-    } else if(miniatureRelativePosition - miniaturesScrolled >= galleryMinWidth - gallerySelectedMiniatureSize) {
-        if(isPrevLayoutLarge)
-        {
-            galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryMinWidth + gallerySelectedMiniatureSize);
-            if(window.matchMedia(galleryMediaSwichSize).matches)
-                galleryMiniatures.parentElement.scrollLeft = galleryMiniatures.parentElement.scrollLeft + 3
-        }
-        else
-            galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize * 2 - overscrollCorrection);
+        return;
+    } 
+    if(miniatureRelativePosition - miniaturesScrolled >= galleryMinWidth - gallerySelectedMiniatureSize) {
+        galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryMinWidth + gallerySelectedMiniatureSize);
+        if(window.matchMedia(galleryMediaSwichSize).matches)
+            galleryMiniatures.parentElement.scrollLeft = galleryMiniatures.parentElement.scrollLeft + 3;
     }
 }
 
@@ -123,20 +128,17 @@ window.addEventListener("resize", () => {
         galleryMaxWidth = 442;
         galleryHeight = 350;
         gallerySelectedMiniatureSize = 82; // miniature cube + border
+        overscrollCorrection = 9;
         isSmallLayout = true;
     } else {
         galleryMinWidth = 650;
         galleryMaxWidth = 850;
         galleryHeight = 700;
         gallerySelectedMiniatureSize = 164; // miniature cube + border
+        overscrollCorrection = 5;
         isSmallLayout = false;
     }
     if(isPrevLayoutLarge) {
-        if(!isPreviousSmallLayout && isSmallLayout) {
-            currentScroll = currentScroll / 2;
-        } else if(isPreviousSmallLayout && !isSmallLayout) {
-            currentScroll = currentScroll * 2;
-        }
         if(isLayoutGorizontal()) {    
             galleryMiniatures.parentElement.scrollLeft = currentScroll;
             correctPositionGorizontal();
