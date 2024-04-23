@@ -29,10 +29,15 @@ if(window.matchMedia(galleryMediaSwichSize).matches) {
     var overscrollCorrection = 9;
 }
 
+var galleryName = "My gallery...";
+
 var isPreviousSmallLayout = isSmallLayout;
 
 var prevSelectedMiniature = undefined;
 var isPrevLayoutLarge = false;
+var isBottomText = true;
+
+if(isBottomText) bottomText.innerText = galleryName;
 
 // create miniatures
 for (const image of images) {
@@ -64,6 +69,8 @@ for (const image of images) {
             correctPositionVertical();
             currentScroll = galleryMiniatures.parentElement.scrollTop;
         }
+        //
+        if(isBottomText) bottomText.innerText = image.name;
         isPrevLayoutLarge = true;
     });
     galleryMiniatures.appendChild(miniatureDiv);
@@ -86,6 +93,7 @@ function back() {
     if(prevSelectedMiniature) 
         prevSelectedMiniature.className = "gallery_miniature_wrap";
     bottomText.className = "gallery_bottom_text";
+    if(isBottomText) bottomText.innerText = galleryName;
 }
 
 function correctPositionVertical() {
@@ -118,7 +126,7 @@ function correctPositionGorizontal() {
     if(miniatureRelativePosition - miniaturesScrolled >= galleryMinWidth - gallerySelectedMiniatureSize) {
         galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryMinWidth + gallerySelectedMiniatureSize);
         if(window.matchMedia(galleryMediaSwichSize).matches)
-            galleryMiniatures.parentElement.scrollLeft = galleryMiniatures.parentElement.scrollLeft + 3;
+            galleryMiniatures.parentElement.scrollLeft = galleryMiniatures.parentElement.scrollLeft + 3; //correct underscrool
     }
 }
 
