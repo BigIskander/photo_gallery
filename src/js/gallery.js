@@ -7,7 +7,7 @@ var galleryLarge = gallery.querySelector(".gallery_large");
 galleryLarge.className = "gallery_large gallery_large_hide";
 
 var imageLarge = galleryLarge.querySelector(".gallery_large_image");
-var bottomText = gallery.parentElement.querySelector(".bottom_text");
+var bottomText = gallery.parentElement.querySelector(".gallery_bottom_text");
 
 var galleryMinWidth = 650;
 var galleryMaxWidth = 850;
@@ -33,26 +33,26 @@ var overscrollCorrection = 5;
 // create miniatures
 for (const image of images) {
     const miniatureDiv = document.createElement("div");
-    miniatureDiv.className = "miniature_wrap";
+    miniatureDiv.className = "gallery_miniature_wrap";
     var miniatureDivDiv = document.createElement("div");
-    miniatureDivDiv.className = "miniature";
+    miniatureDivDiv.className = "gallery_miniature";
     miniatureDiv.appendChild(miniatureDivDiv);
     var miniatureImage = new Image();
     miniatureImage.src = image.miniature;
-    miniatureImage.className = "miniature_image";
+    miniatureImage.className = "gallery_miniature_image";
     miniatureDivDiv.appendChild(miniatureImage);
     // add event listener to miniature
     miniatureDiv.addEventListener("click", () => {
         if(prevSelectedMiniature) 
-            prevSelectedMiniature.className = "miniature_wrap";
+            prevSelectedMiniature.className = "gallery_miniature_wrap";
         prevSelectedMiniature = miniatureDiv;
-        miniatureDiv.className = "miniature_wrap miniature_wrap_selected";
+        miniatureDiv.className = "gallery_miniature_wrap gallery_miniature_wrap_selected";
         // change large image
         imageLarge.src = image.image;
         galleryLarge.className = "gallery_large";
         // change gallery layout gallery_miniatures_side
         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_side";
-        bottomText.className = "bottom_text bottom_text_large";
+        bottomText.className = "gallery_bottom_text gallery_bottom_text_large";
         if((!isSmallLayout && window.matchMedia(galleryMediaSwichLayout).matches) || (isSmallLayout && window.matchMedia(galleryMediaSmallSwichLayout).matches)) {
                 correctPositionGorizontal();
         } else {
@@ -72,8 +72,8 @@ function back() {
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
     galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize - overscrollCorrection);
     if(prevSelectedMiniature) 
-        prevSelectedMiniature.className = "miniature_wrap";
-    bottomText.className = "bottom_text";
+        prevSelectedMiniature.className = "gallery_miniature_wrap";
+    bottomText.className = "gallery_bottom_text";
 }
 
 function correctPositionVertical() {
