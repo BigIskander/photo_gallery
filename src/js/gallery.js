@@ -7,6 +7,7 @@ var galleryLarge = gallery.querySelector(".gallery_large");
 galleryLarge.className = "gallery_large gallery_large_hide";
 
 var imageLarge = galleryLarge.querySelector(".gallery_large_image");
+var bottomText = gallery.parentElement.querySelector(".bottom_text");
 
 var galleryMinWidth = 650;
 var galleryMaxWidth = 850;
@@ -51,6 +52,7 @@ for (const image of images) {
         galleryLarge.className = "gallery_large";
         // change gallery layout gallery_miniatures_side
         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_side";
+        bottomText.className = "bottom_text bottom_text_large";
         if((!isSmallLayout && window.matchMedia(galleryMediaSwichLayout).matches) || (isSmallLayout && window.matchMedia(galleryMediaSmallSwichLayout).matches)) {
                 correctPositionGorizontal();
         } else {
@@ -71,6 +73,7 @@ function back() {
     galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize - overscrollCorrection);
     if(prevSelectedMiniature) 
         prevSelectedMiniature.className = "miniature_wrap";
+    bottomText.className = "bottom_text";
 }
 
 function correctPositionVertical() {
