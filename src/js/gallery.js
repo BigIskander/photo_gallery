@@ -104,11 +104,6 @@ function correctPositionGorizontal() {
 }
 
 window.addEventListener("resize", () => {
-    if((!isSmallLayout && window.matchMedia(galleryMediaSwichLayout).matches) || (isSmallLayout && window.matchMedia(galleryMediaSmallSwichLayout).matches)) {
-        correctPositionGorizontal();
-    } else {
-        correctPositionVertical();
-    }
     if(window.matchMedia(galleryMediaSwichSize).matches) {
         galleryMinWidth = 325;
         galleryMaxWidth = 442;
@@ -121,5 +116,10 @@ window.addEventListener("resize", () => {
         galleryHeight = 700;
         gallerySelectedMiniatureSize = 164; // miniature cube + border
         isSmallLayout = false;
+    }
+    if((!isSmallLayout && window.matchMedia(galleryMediaSwichLayout).matches) || (isSmallLayout && window.matchMedia(galleryMediaSmallSwichLayout).matches)) {
+        correctPositionGorizontal();
+    } else {
+        correctPositionVertical();
     }
 });
