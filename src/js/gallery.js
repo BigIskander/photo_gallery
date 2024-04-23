@@ -53,7 +53,7 @@ for (const image of images) {
         // change gallery layout gallery_miniatures_side
         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_side";
         bottomText.className = "gallery_bottom_text gallery_bottom_text_large";
-        if((!isSmallLayout && window.matchMedia(galleryMediaSwichLayout).matches) || (isSmallLayout && window.matchMedia(galleryMediaSmallSwichLayout).matches)) {
+        if(isLayoutGorizontal()) {
                 correctPositionGorizontal();
         } else {
                 correctPositionVertical();
@@ -61,6 +61,12 @@ for (const image of images) {
         isPrevLayoutLarge = true;
     });
     galleryMiniatures.appendChild(miniatureDiv);
+}
+
+function isLayoutGorizontal() {
+    var isLargeGorizontal = (!window.matchMedia(galleryMediaSwichSize).matches && window.matchMedia(galleryMediaSwichLayout).matches);
+    var isSmallGorizontal = (window.matchMedia(galleryMediaSwichSize).matches && window.matchMedia(galleryMediaSmallSwichLayout).matches);
+    return (isLargeGorizontal || isSmallGorizontal);
 }
 
 function back() {
@@ -120,7 +126,7 @@ window.addEventListener("resize", () => {
         gallerySelectedMiniatureSize = 164; // miniature cube + border
         isSmallLayout = false;
     }
-    if((!isSmallLayout && window.matchMedia(galleryMediaSwichLayout).matches) || (isSmallLayout && window.matchMedia(galleryMediaSmallSwichLayout).matches)) {
+    if(isLayoutGorizontal()) {
         correctPositionGorizontal();
     } else {
         correctPositionVertical();
