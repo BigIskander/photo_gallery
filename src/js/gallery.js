@@ -38,6 +38,9 @@ variables = {
     currentScroll: 0 //ok
 }
 
+variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
+variables.isPreviousSmallLayout = variables.isSmallLayout;
+
 if(variables.isBottomText) bottomText.innerText = variables.galleryName;
 
 // create miniatures
@@ -96,7 +99,6 @@ function back() {
     galleryMiniatures.className = "gallery_miniatures";
     variables.isPrevLayoutLarge = false;
     var sizes = getSizes();
-    console.log(sizes);
     var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
     galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize - sizes.overscrollCorrection);
@@ -110,7 +112,6 @@ function correctPositionVertical() {
     var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
     var sizes = getSizes();
-    console.log(sizes);
     if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
         galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * 2 - sizes.overscrollCorrection);
         return;
@@ -128,7 +129,6 @@ function correctPositionGorizontal() {
     var miniatureRelativePosition = variables.prevSelectedMiniature.offsetLeft - galleryMiniatures.offsetLeft;
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollLeft;
     var sizes = getSizes();
-    console.log(sizes)
     if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
         galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * 2 - sizes.overscrollCorrection);
         return;
@@ -145,6 +145,7 @@ function correctPositionGorizontal() {
 }
 
 window.addEventListener("resize", () => {
+    variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
     if(variables.isPrevLayoutLarge) {
         if(isLayoutGorizontal()) {    
             galleryMiniatures.parentElement.scrollLeft = variables.currentScroll;
