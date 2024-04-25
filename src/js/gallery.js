@@ -18,16 +18,19 @@ variables = {
             galleryMaxWidth: 442,
             galleryHeight: 350,
             gallerySelectedMiniatureSize: 82, // miniature cube + border    
-            overscrollCorrection: 9
+            overscrollCorrection: 9,
+            underscrollCorrection: 3
         },
         large: {
             galleryMinWidth: 650,
             galleryMaxWidth: 850,
             galleryHeight: 700,
             gallerySelectedMiniatureSize: 164, // miniature cube + border
-            overscrollCorrection: 5
+            overscrollCorrection: 5,
+            underscrollCorrection: 0
         }
     },
+    scrollToPosition: 2, // 0 - 2
     galleryMediaSwichSize: "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)", //ok
     galleryMediaSwichLayout: "(max-width: 1122px)", //ok
     galleryMediaSmallSwichLayout: "(max-width: 581px)", //ok
@@ -116,7 +119,7 @@ function correctPositionVertical() {
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
     var sizes = getSizes();
     if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
-        galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * 2 - sizes.overscrollCorrection);
+        galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * variables.scrollToPosition - sizes.overscrollCorrection);
         return;
     }
     if(miniatureRelativePosition - miniaturesScrolled < 0) {
@@ -133,7 +136,7 @@ function correctPositionGorizontal() {
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollLeft;
     var sizes = getSizes();
     if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
-        galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * 2 - sizes.overscrollCorrection);
+        galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * variables.scrollToPosition - sizes.overscrollCorrection);
         return;
     }
     if(miniatureRelativePosition - miniaturesScrolled < 0) {
@@ -141,9 +144,7 @@ function correctPositionGorizontal() {
         return;
     } 
     if(miniatureRelativePosition - miniaturesScrolled >= sizes.galleryMinWidth - sizes.gallerySelectedMiniatureSize) {
-        galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.galleryMinWidth + sizes.gallerySelectedMiniatureSize);
-        if(window.matchMedia(variables.galleryMediaSwichSize).matches)
-            galleryMiniatures.parentElement.scrollLeft = galleryMiniatures.parentElement.scrollLeft + 3; //correct underscrool
+        galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.galleryMinWidth + sizes.gallerySelectedMiniatureSize) + sizes.underscrollCorrection;
     }
 }
 
