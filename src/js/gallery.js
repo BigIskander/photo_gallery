@@ -9,27 +9,6 @@ galleryLarge.className = "gallery_large gallery_large_hide";
 var imageLarge = galleryLarge.querySelector(".gallery_large_image");
 var bottomText = gallery.parentElement.querySelector(".gallery_bottom_text");
 
-// var galleryMinWidth = 650;
-// var galleryMaxWidth = 850;
-// var galleryHeight = 700;
-// var gallerySelectedMiniatureSize = 164; // miniature cube + border
-// var overscrollCorrection = 5;
-// var galleryMediaSwichSize = "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)";
-// var galleryMediaSwichLayout = "(max-width: 1122px)";
-// var galleryMediaSmallSwichLayout = "(max-width: 581px)";
-// var isSmallLayout = false;
-// var currentScroll = 0;
-
-// if(window.matchMedia(galleryMediaSwichSize).matches) {}
-
-// var galleryName = "My gallery...";
-
-// var isPreviousSmallLayout = isSmallLayout;
-
-// var prevSelectedMiniature = undefined;
-// var isPrevLayoutLarge = false;
-// var isBottomText = true;
-
 variables = {
     isBottomText: true, // ok
     galleryName: "My gallery...", //ok
@@ -58,18 +37,6 @@ variables = {
     prevSelectedMiniature: undefined, //ok
     currentScroll: 0 //ok
 }
-
-// if(window.matchMedia(variables.galleryMediaSwichSize).matches) {
-//     variables.isSmallLayout = true;
-//     variables.isPreviousSmallLayout = true;
-//     //temporary change
-//     var galleryMinWidth = 325;
-//     var galleryMaxWidth = 442;
-//     var galleryHeight = 350;
-//     var gallerySelectedMiniatureSize = 82; // miniature cube + border
-//     // var isSmallLayout = true;
-//     var overscrollCorrection = 9;
-// }
 
 if(variables.isBottomText) bottomText.innerText = variables.galleryName;
 
@@ -178,21 +145,6 @@ function correctPositionGorizontal() {
 }
 
 window.addEventListener("resize", () => {
-    // if(window.matchMedia(variables.galleryMediaSwichSize).matches) {
-    //     galleryMinWidth = 325;
-    //     galleryMaxWidth = 442;
-    //     galleryHeight = 350;
-    //     gallerySelectedMiniatureSize = 82; // miniature cube + border
-    //     overscrollCorrection = 9;
-    //     variables.isSmallLayout = true;
-    // } else {
-    //     galleryMinWidth = 650;
-    //     galleryMaxWidth = 850;
-    //     galleryHeight = 700;
-    //     gallerySelectedMiniatureSize = 164; // miniature cube + border
-    //     overscrollCorrection = 5;
-    //     variables.isSmallLayout = false;
-    // }
     if(variables.isPrevLayoutLarge) {
         if(isLayoutGorizontal()) {    
             galleryMiniatures.parentElement.scrollLeft = variables.currentScroll;
