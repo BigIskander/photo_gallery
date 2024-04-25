@@ -34,6 +34,7 @@ variables = {
     isSmallLayout: false, //ok
     isPreviousSmallLayout: false, //ok
     isPrevLayoutLarge: false, //ok
+    isPrevLayoutGorizontal: false,
     prevSelectedMiniature: undefined, //ok
     currentScroll: 0 //ok
 }
@@ -68,9 +69,11 @@ for (const image of images) {
         bottomText.className = "gallery_bottom_text gallery_bottom_text_large";
         if(isLayoutGorizontal()) {
             correctPositionGorizontal();
+            variables.isPrevLayoutGorizontal = true;
             variables.currentScroll = galleryMiniatures.parentElement.scrollLeft;
         } else {
             correctPositionVertical();
+            variables.isPrevLayoutGorizontal = false;
             variables.currentScroll = galleryMiniatures.parentElement.scrollTop;
         }
         //
@@ -148,12 +151,16 @@ window.addEventListener("resize", () => {
     variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
     if(variables.isPrevLayoutLarge) {
         if(isLayoutGorizontal()) {    
-            galleryMiniatures.parentElement.scrollLeft = variables.currentScroll;
+            if(!variables.isPrevLayoutGorizontal)
+                galleryMiniatures.parentElement.scrollLeft = variables.currentScroll;
             correctPositionGorizontal();
+            variables.isPrevLayoutGorizontal = true;
             variables.currentScroll = galleryMiniatures.parentElement.scrollLeft;
         } else {
-            galleryMiniatures.parentElement.scrollTop = variables.currentScroll;
+            if(variables.isPrevLayoutGorizontal)
+                galleryMiniatures.parentElement.scrollTop = variables.currentScroll;
             correctPositionVertical();
+            variables.isPrevLayoutGorizontal = false;
             variables.currentScroll = galleryMiniatures.parentElement.scrollTop;
         }
     }
