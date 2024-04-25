@@ -14,20 +14,13 @@ var galleryMaxWidth = 850;
 var galleryHeight = 700;
 var gallerySelectedMiniatureSize = 164; // miniature cube + border
 var overscrollCorrection = 5;
-var galleryMediaSwichSize = "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)";
-var galleryMediaSwichLayout = "(max-width: 1122px)";
-var galleryMediaSmallSwichLayout = "(max-width: 581px)";
+// var galleryMediaSwichSize = "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)";
+// var galleryMediaSwichLayout = "(max-width: 1122px)";
+// var galleryMediaSmallSwichLayout = "(max-width: 581px)";
 // var isSmallLayout = false;
 // var currentScroll = 0;
 
-if(window.matchMedia(galleryMediaSwichSize).matches) {
-    var galleryMinWidth = 325;
-    var galleryMaxWidth = 442;
-    var galleryHeight = 350;
-    var gallerySelectedMiniatureSize = 82; // miniature cube + border
-    // var isSmallLayout = true;
-    var overscrollCorrection = 9;
-}
+// if(window.matchMedia(galleryMediaSwichSize).matches) {}
 
 // var galleryName = "My gallery...";
 
@@ -56,9 +49,9 @@ variables = {
             overscrollCorrection: 5
         }
     },
-    galleryMediaSwichSize: "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)",
-    galleryMediaSwichLayout: "(max-width: 1122px)",
-    galleryMediaSmallSwichLayout: "(max-width: 581px)",
+    galleryMediaSwichSize: "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)", //ok
+    galleryMediaSwichLayout: "(max-width: 1122px)", //ok
+    galleryMediaSmallSwichLayout: "(max-width: 581px)", //ok
     isSmallLayout: false, //ok
     isPreviousSmallLayout: false, //ok
     isPrevLayoutLarge: false, //ok
@@ -66,9 +59,16 @@ variables = {
     currentScroll: 0 //ok
 }
 
-if(window.matchMedia(galleryMediaSwichSize).matches) {
+if(window.matchMedia(variables.galleryMediaSwichSize).matches) {
     variables.isSmallLayout = true;
     variables.isPreviousSmallLayout = true;
+    //temporary change
+    var galleryMinWidth = 325;
+    var galleryMaxWidth = 442;
+    var galleryHeight = 350;
+    var gallerySelectedMiniatureSize = 82; // miniature cube + border
+    // var isSmallLayout = true;
+    var overscrollCorrection = 9;
 }
 
 if(variables.isBottomText) bottomText.innerText = variables.galleryName;
@@ -111,8 +111,8 @@ for (const image of images) {
 }
 
 function isLayoutGorizontal() {
-    var isLargeGorizontal = (!window.matchMedia(galleryMediaSwichSize).matches && window.matchMedia(galleryMediaSwichLayout).matches);
-    var isSmallGorizontal = (window.matchMedia(galleryMediaSwichSize).matches && window.matchMedia(galleryMediaSmallSwichLayout).matches);
+    var isLargeGorizontal = (!window.matchMedia(variables.galleryMediaSwichSize).matches && window.matchMedia(variables.galleryMediaSwichLayout).matches);
+    var isSmallGorizontal = (window.matchMedia(variables.galleryMediaSwichSize).matches && window.matchMedia(variables.galleryMediaSmallSwichLayout).matches);
     return (isLargeGorizontal || isSmallGorizontal);
 }
 
@@ -159,13 +159,13 @@ function correctPositionGorizontal() {
     } 
     if(miniatureRelativePosition - miniaturesScrolled >= galleryMinWidth - gallerySelectedMiniatureSize) {
         galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - galleryMinWidth + gallerySelectedMiniatureSize);
-        if(window.matchMedia(galleryMediaSwichSize).matches)
+        if(window.matchMedia(variables.galleryMediaSwichSize).matches)
             galleryMiniatures.parentElement.scrollLeft = galleryMiniatures.parentElement.scrollLeft + 3; //correct underscrool
     }
 }
 
 window.addEventListener("resize", () => {
-    if(window.matchMedia(galleryMediaSwichSize).matches) {
+    if(window.matchMedia(variables.galleryMediaSwichSize).matches) {
         galleryMinWidth = 325;
         galleryMaxWidth = 442;
         galleryHeight = 350;
