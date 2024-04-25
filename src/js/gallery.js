@@ -17,27 +17,61 @@ var overscrollCorrection = 5;
 var galleryMediaSwichSize = "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)";
 var galleryMediaSwichLayout = "(max-width: 1122px)";
 var galleryMediaSmallSwichLayout = "(max-width: 581px)";
-var isSmallLayout = false;
-var currentScroll = 0;
+// var isSmallLayout = false;
+// var currentScroll = 0;
 
 if(window.matchMedia(galleryMediaSwichSize).matches) {
     var galleryMinWidth = 325;
     var galleryMaxWidth = 442;
     var galleryHeight = 350;
     var gallerySelectedMiniatureSize = 82; // miniature cube + border
-    var isSmallLayout = true;
+    // var isSmallLayout = true;
     var overscrollCorrection = 9;
 }
 
-var galleryName = "My gallery...";
+// var galleryName = "My gallery...";
 
-var isPreviousSmallLayout = isSmallLayout;
+// var isPreviousSmallLayout = isSmallLayout;
 
-var prevSelectedMiniature = undefined;
-var isPrevLayoutLarge = false;
-var isBottomText = true;
+// var prevSelectedMiniature = undefined;
+// var isPrevLayoutLarge = false;
+// var isBottomText = true;
 
-if(isBottomText) bottomText.innerText = galleryName;
+variables = {
+    isBottomText: true, // ok
+    galleryName: "My gallery...", //ok
+    sizes: {
+        small: {
+            galleryMinWidth: 325,
+            galleryMaxWidth: 442,
+            galleryHeight: 350,
+            gallerySelectedMiniatureSize: 82, // miniature cube + border    
+            overscrollCorrection: 9
+        },
+        large: {
+            galleryMinWidth: 650,
+            galleryMaxWidth: 850,
+            galleryHeight: 700,
+            gallerySelectedMiniatureSize: 164, // miniature cube + border
+            overscrollCorrection: 5
+        }
+    },
+    galleryMediaSwichSize: "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)",
+    galleryMediaSwichLayout: "(max-width: 1122px)",
+    galleryMediaSmallSwichLayout: "(max-width: 581px)",
+    isSmallLayout: false, //ok
+    isPreviousSmallLayout: false, //ok
+    isPrevLayoutLarge: false, //ok
+    prevSelectedMiniature: undefined, //ok
+    currentScroll: 0 //ok
+}
+
+if(window.matchMedia(galleryMediaSwichSize).matches) {
+    variables.isSmallLayout = true;
+    variables.isPreviousSmallLayout = true;
+}
+
+if(variables.isBottomText) bottomText.innerText = variables.galleryName;
 
 // create miniatures
 for (const image of images) {
@@ -52,9 +86,9 @@ for (const image of images) {
     miniatureDivDiv.appendChild(miniatureImage);
     // add event listener to miniature
     miniatureDiv.addEventListener("click", () => {
-        if(prevSelectedMiniature) 
-            prevSelectedMiniature.className = "gallery_miniature_wrap";
-        prevSelectedMiniature = miniatureDiv;
+        if(variables.prevSelectedMiniature) 
+            variables.prevSelectedMiniature.className = "gallery_miniature_wrap";
+        variables.prevSelectedMiniature = miniatureDiv;
         miniatureDiv.className = "gallery_miniature_wrap gallery_miniature_wrap_selected";
         // change large image
         imageLarge.src = image.image;
@@ -64,14 +98,14 @@ for (const image of images) {
         bottomText.className = "gallery_bottom_text gallery_bottom_text_large";
         if(isLayoutGorizontal()) {
             correctPositionGorizontal();
-            currentScroll = galleryMiniatures.parentElement.scrollLeft;
+            variables.currentScroll = galleryMiniatures.parentElement.scrollLeft;
         } else {
             correctPositionVertical();
-            currentScroll = galleryMiniatures.parentElement.scrollTop;
+            variables.currentScroll = galleryMiniatures.parentElement.scrollTop;
         }
         //
-        if(isBottomText) bottomText.innerText = image.name;
-        isPrevLayoutLarge = true;
+        if(variables.isBottomText) bottomText.innerText = image.name;
+        variables.isPrevLayoutLarge = true;
     });
     galleryMiniatures.appendChild(miniatureDiv);
 }
@@ -86,20 +120,20 @@ function back() {
     prevSelectedPhoto = undefined;
     galleryLarge.className = "gallery_large gallery_large_hide";
     galleryMiniatures.className = "gallery_miniatures";
-    isPrevLayoutLarge = false;
-    var miniatureRelativePosition = prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
+    variables.isPrevLayoutLarge = false;
+    var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
     galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize - overscrollCorrection);
-    if(prevSelectedMiniature) 
-        prevSelectedMiniature.className = "gallery_miniature_wrap";
+    if(variables.prevSelectedMiniature) 
+        variables.prevSelectedMiniature.className = "gallery_miniature_wrap";
     bottomText.className = "gallery_bottom_text";
-    if(isBottomText) bottomText.innerText = galleryName;
+    if(variables.isBottomText) bottomText.innerText = variables.galleryName;
 }
 
 function correctPositionVertical() {
-    var miniatureRelativePosition = prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
+    var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
-    if(!isPrevLayoutLarge || (isPreviousSmallLayout != isSmallLayout)) {
+    if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
         galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize * 2 - overscrollCorrection);
         return;
     }
@@ -113,9 +147,9 @@ function correctPositionVertical() {
 }
 
 function correctPositionGorizontal() {
-    var miniatureRelativePosition = prevSelectedMiniature.offsetLeft - galleryMiniatures.offsetLeft;
+    var miniatureRelativePosition = variables.prevSelectedMiniature.offsetLeft - galleryMiniatures.offsetLeft;
     var miniaturesScrolled = galleryMiniatures.parentElement.scrollLeft;
-    if(!isPrevLayoutLarge || (isPreviousSmallLayout != isSmallLayout)) {
+    if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
         galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - gallerySelectedMiniatureSize * 2 - overscrollCorrection);
         return;
     }
@@ -137,25 +171,25 @@ window.addEventListener("resize", () => {
         galleryHeight = 350;
         gallerySelectedMiniatureSize = 82; // miniature cube + border
         overscrollCorrection = 9;
-        isSmallLayout = true;
+        variables.isSmallLayout = true;
     } else {
         galleryMinWidth = 650;
         galleryMaxWidth = 850;
         galleryHeight = 700;
         gallerySelectedMiniatureSize = 164; // miniature cube + border
         overscrollCorrection = 5;
-        isSmallLayout = false;
+        variables.isSmallLayout = false;
     }
-    if(isPrevLayoutLarge) {
+    if(variables.isPrevLayoutLarge) {
         if(isLayoutGorizontal()) {    
-            galleryMiniatures.parentElement.scrollLeft = currentScroll;
+            galleryMiniatures.parentElement.scrollLeft = variables.currentScroll;
             correctPositionGorizontal();
-            currentScroll = galleryMiniatures.parentElement.scrollLeft;
+            variables.currentScroll = galleryMiniatures.parentElement.scrollLeft;
         } else {
-            galleryMiniatures.parentElement.scrollTop = currentScroll;
+            galleryMiniatures.parentElement.scrollTop = variables.currentScroll;
             correctPositionVertical();
-            currentScroll = galleryMiniatures.parentElement.scrollTop;
+            variables.currentScroll = galleryMiniatures.parentElement.scrollTop;
         }
     }
-    isPreviousSmallLayout = isSmallLayout;
+    variables.isPreviousSmallLayout = variables.isSmallLayout;
 });
