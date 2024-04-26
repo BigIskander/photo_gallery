@@ -14,9 +14,13 @@
         <!-- zoom in script copied from personal website -->
         <link rel="stylesheet" href="/src/css/zoom_in_out.css">
         <script src="/src/js/zoom_in_out.js"></script>
+        <!-- some of dark theme styles -->
+        <link rel="stylesheet" href="/src/css/dark_theme.css">
     </head>
     <body>
-        <div id="content">
+        <script src="/src/js/switch_theme.js"></script>
+        <a onclick="switch_theme()" href="JavaScript:void(0);" class="switch_theme_link">Переключить тему.</a>
+        <div id="content" style="margin-top: 50px;">
             <!--  style="display: flex; justify-content: center;" -->
             <div id="gallery"></div>
             <script>

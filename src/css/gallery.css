@@ -33,6 +33,10 @@
     border-color: grey;
 }
 
+.dark .gallery_large {
+    border-color: lightgrey;
+}
+
 .gallery_large_hide {
     visibility: hidden;
     overflow: clip;
@@ -46,6 +50,10 @@
 
 .gallery_back_link {
     color: black;
+}
+
+.dark .gallery_back_link {
+    color: white;
 }
 
 .gallery_large_container_wrap {
@@ -81,6 +89,10 @@
     border-color: grey;
 }
 
+.dark .gallery_miniatures_wrap {
+    border-color: lightgray;
+}
+
 .gallery_miniatures {
     display: flex; 
     flex-direction: row;
@@ -114,8 +126,16 @@
     border-width: 2px;
 }
 
+.dark .gallery_miniature_wrap_selected {
+    border-color: white;
+}
+
 .gallery_miniature_wrap:hover {
     border-color: black;
+}
+
+.dark .gallery_miniature_wrap:hover {
+    border-color: white;
 }
 
 .gallery_miniature {
