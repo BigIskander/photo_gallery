@@ -1,6 +1,43 @@
 // some variables
 
-var gallery = document.getElementById("gallery");
+//create gallery
+var galleryWrap = document.getElementById("gallery");
+galleryWrap.className = "gallery_wrap";
+var galleryAndText = galleryWrap.appendChild(document.createElement("div"));
+galleryAndText.className = "gallery_and_text";
+var gallery = galleryAndText.appendChild(document.createElement("div"));
+gallery.className = "gallery";
+var galleryLarge = gallery.appendChild(document.createElement("div"));
+galleryLarge.className = "gallery_large gallery_large_hide"; //hide by default
+var galleryBack = galleryLarge.appendChild(document.createElement("div"));
+galleryBack.className = "gallery_back";
+var galleryBackLink = galleryBack.appendChild(document.createElement("a"));
+galleryBackLink.href = "JavaScript:void(0);";
+galleryBackLink.className = "gallery_back_link";
+galleryBackLink.onclick = () => { back() };
+galleryBackLink.innerText = "Назад к списку фото.";
+var galleryLargeContainerWrap = galleryLarge.appendChild(document.createElement("div"));
+galleryLargeContainerWrap.className = "gallery_large_container_wrap";
+var galleryLargeContainer = galleryLargeContainerWrap.appendChild(document.createElement("div"));
+galleryLargeContainer.className = "gallery_large_container";
+var galleryLargeImage = galleryLargeContainer.appendChild(document.createElement("img"));
+galleryLargeImage.className = "gallery_large_image";
+var galleryLargeSpinner = galleryLargeContainer.appendChild(document.createElement("div"));
+galleryLargeSpinner.className = "sk-fading-circle  sk-fading-circle_hide"; //hide by default
+for(var i = 0; i < 12; i++) {
+    galleryLargeSpinner.appendChild(document.createElement("div")).className = "sk-circle" + (i + 1) + " sk-circle";
+}
+var galleryMiniaturesWrap = gallery.appendChild(document.createElement("div"));
+galleryMiniaturesWrap.className = "gallery_miniatures_wrap";
+var galleryMiniatures = galleryMiniaturesWrap.appendChild(document.createElement("div"));
+galleryMiniatures.className = "gallery_miniatures";
+var galleryBottomTextWrap = galleryAndText.appendChild(document.createElement("div"));
+galleryBottomTextWrap.className = "gallery_bottom_text_wrap";
+var galleryBottomText = galleryBottomTextWrap.appendChild(document.createElement("div"));
+galleryBottomText.className = "gallery_bottom_text";
+
+
+//
 var galleryMiniatures = gallery.querySelector(".gallery_miniatures");
 
 var galleryLarge = gallery.querySelector(".gallery_large");
