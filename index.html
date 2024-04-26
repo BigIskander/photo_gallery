@@ -8,12 +8,14 @@
         <link rel="stylesheet" href="/src/css/loading.css">
         <link rel="stylesheet" href="/src/css/gallery.css">
         <script src="/src/js/json_variable.js"></script>
+        <script src="/src/js/gallery.js"></script>
     </head>
     <body>
         <div id="content" style="display: flex; justify-content: center;">
             <div id="gallery"></div>
+            <script>
+                galleryCreate("gallery", images);
+            </script>
         </div>
-        
-        <script src="/src/js/gallery.js"></script>
     </body>
 </html>
