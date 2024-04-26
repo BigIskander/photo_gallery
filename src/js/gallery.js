@@ -47,6 +47,14 @@ galleryBottomText.className = "gallery_bottom_text";
 // var galleryLargeImage = galleryLarge.querySelector(".gallery_large_image"); //galleryLargeImage
 // var galleryBottomText = gallery.parentElement.querySelector(".gallery_bottom_text"); //galleryBottomText
 
+htmltags = {
+    galleryMiniatures: galleryMiniatures, //ok
+    galleryLarge: galleryLarge, //ok
+    galleryLargeSpinner: galleryLargeSpinner, //ok
+    galleryLargeImage: galleryLargeImage, //ok
+    galleryBottomText: galleryBottomText //ok
+}
+
 variables = {
     isBottomText: true,
     galleryName: "My gallery...", 
@@ -83,7 +91,7 @@ variables = {
 variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
 variables.isPreviousSmallLayout = variables.isSmallLayout;
 
-if(variables.isBottomText) galleryBottomText.innerText = variables.galleryName;
+if(variables.isBottomText) htmltags.galleryBottomText.innerText = variables.galleryName;
 
 // create miniatures
 for (const image of images) {
@@ -103,41 +111,41 @@ for (const image of images) {
         variables.prevSelectedMiniature = miniatureDiv;
         miniatureDiv.className = "gallery_miniature_wrap gallery_miniature_wrap_selected";
         // change large image
-        galleryLarge.className = "gallery_large";
-        galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
-        galleryLargeImage.src = image.image;
+        htmltags.galleryLarge.className = "gallery_large";
+        htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
+        htmltags.galleryLargeImage.src = image.image;
         setTimeout(() => {
-            if(galleryLargeImage.complete) {
-                galleryLargeImage.className = "gallery_large_image";
+            if(htmltags.galleryLargeImage.complete) {
+                htmltags.galleryLargeImage.className = "gallery_large_image";
             } else {
-                galleryLargeImage.className = "gallery_large_image gallery_large_image_hide";
-                galleryLargeSpinner.className = "sk-fading-circle";
-                galleryLargeImage.onload = () => {
-                    galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
-                    galleryLargeImage.className = "gallery_large_image";
+                htmltags.galleryLargeImage.className = "gallery_large_image gallery_large_image_hide";
+                htmltags.galleryLargeSpinner.className = "sk-fading-circle";
+                htmltags.galleryLargeImage.onload = () => {
+                    htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
+                    htmltags.galleryLargeImage.className = "gallery_large_image";
                 };
-                galleryLargeImage.onerror = () => {
-                    galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
+                htmltags.galleryLargeImage.onerror = () => {
+                    htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
                 }
             }
         }, 100);
         // change gallery layout gallery_miniatures_side
-        galleryMiniatures.className = "gallery_miniatures gallery_miniatures_side";
-        galleryBottomText.className = "gallery_bottom_text gallery_bottom_text_large";
+        htmltags.galleryMiniatures.className = "gallery_miniatures gallery_miniatures_side";
+        htmltags.galleryBottomText.className = "gallery_bottom_text gallery_bottom_text_large";
         if(isLayoutGorizontal()) {
             correctPositionGorizontal();
             variables.isPrevLayoutGorizontal = true;
-            variables.currentScroll = galleryMiniatures.parentElement.scrollLeft;
+            variables.currentScroll = htmltags.galleryMiniatures.parentElement.scrollLeft;
         } else {
             correctPositionVertical();
             variables.isPrevLayoutGorizontal = false;
-            variables.currentScroll = galleryMiniatures.parentElement.scrollTop;
+            variables.currentScroll = htmltags.galleryMiniatures.parentElement.scrollTop;
         }
         //
-        if(variables.isBottomText) galleryBottomText.innerText = image.name;
+        if(variables.isBottomText) htmltags.galleryBottomText.innerText = image.name;
         variables.isPrevLayoutLarge = true;
     });
-    galleryMiniatures.appendChild(miniatureDiv);
+    htmltags.galleryMiniatures.appendChild(miniatureDiv);
 }
 
 function isLayoutGorizontal() {
@@ -155,52 +163,52 @@ function getSizes() {
 
 function back() {
     prevSelectedPhoto = undefined;
-    galleryLarge.className = "gallery_large gallery_large_hide";
-    galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
-    galleryMiniatures.className = "gallery_miniatures";
-    galleryLargeImage.removeAttribute("src");
+    htmltags.galleryLarge.className = "gallery_large gallery_large_hide";
+    htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
+    htmltags.galleryMiniatures.className = "gallery_miniatures";
+    htmltags.galleryLargeImage.removeAttribute("src");
     variables.isPrevLayoutLarge = false;
     var sizes = getSizes();
-    var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
-    var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
-    galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize - sizes.overscrollCorrection);
+    var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - htmltags.galleryMiniatures.offsetTop;
+    var miniaturesScrolled = htmltags.galleryMiniatures.parentElement.scrollTop;
+    htmltags.galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize - sizes.overscrollCorrection);
     if(variables.prevSelectedMiniature) 
         variables.prevSelectedMiniature.className = "gallery_miniature_wrap";
-    galleryBottomText.className = "gallery_bottom_text";
-    if(variables.isBottomText) galleryBottomText.innerText = variables.galleryName;
+    htmltags.galleryBottomText.className = "gallery_bottom_text";
+    if(variables.isBottomText) htmltags.galleryBottomText.innerText = variables.galleryName;
 }
 
 function correctPositionVertical() {
-    var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
-    var miniaturesScrolled = galleryMiniatures.parentElement.scrollTop;
+    var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - htmltags.galleryMiniatures.offsetTop;
+    var miniaturesScrolled = htmltags.galleryMiniatures.parentElement.scrollTop;
     var sizes = getSizes();
     if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
-        galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * variables.scrollToPosition - sizes.overscrollCorrection);
+        htmltags.galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * variables.scrollToPosition - sizes.overscrollCorrection);
         return;
     }
     if(miniatureRelativePosition - miniaturesScrolled < 0) {
-        galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
+        htmltags.galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
         return;
     } 
     if(miniatureRelativePosition - miniaturesScrolled >= sizes.galleryHeight - sizes.gallerySelectedMiniatureSize) {
-        galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.galleryHeight + sizes.gallerySelectedMiniatureSize);
+        htmltags.galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.galleryHeight + sizes.gallerySelectedMiniatureSize);
     }
 }
 
 function correctPositionGorizontal() {
-    var miniatureRelativePosition = variables.prevSelectedMiniature.offsetLeft - galleryMiniatures.offsetLeft;
-    var miniaturesScrolled = galleryMiniatures.parentElement.scrollLeft;
+    var miniatureRelativePosition = variables.prevSelectedMiniature.offsetLeft - htmltags.galleryMiniatures.offsetLeft;
+    var miniaturesScrolled = htmltags.galleryMiniatures.parentElement.scrollLeft;
     var sizes = getSizes();
     if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
-        galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * variables.scrollToPosition - sizes.overscrollCorrection);
+        htmltags.galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * variables.scrollToPosition - sizes.overscrollCorrection);
         return;
     }
     if(miniatureRelativePosition - miniaturesScrolled < 0) {
-        galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
+        htmltags.galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled);
         return;
     } 
     if(miniatureRelativePosition - miniaturesScrolled >= sizes.galleryMinWidth - sizes.gallerySelectedMiniatureSize) {
-        galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.galleryMinWidth + sizes.gallerySelectedMiniatureSize) + sizes.underscrollCorrection;
+        htmltags.galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.galleryMinWidth + sizes.gallerySelectedMiniatureSize) + sizes.underscrollCorrection;
     }
 }
 
@@ -209,16 +217,16 @@ window.addEventListener("resize", () => {
     if(variables.isPrevLayoutLarge) {
         if(isLayoutGorizontal()) {    
             if(!variables.isPrevLayoutGorizontal)
-                galleryMiniatures.parentElement.scrollLeft = variables.currentScroll;
+                htmltags.galleryMiniatures.parentElement.scrollLeft = variables.currentScroll;
             correctPositionGorizontal();
             variables.isPrevLayoutGorizontal = true;
-            variables.currentScroll = galleryMiniatures.parentElement.scrollLeft;
+            variables.currentScroll = htmltags.galleryMiniatures.parentElement.scrollLeft;
         } else {
             if(variables.isPrevLayoutGorizontal)
-                galleryMiniatures.parentElement.scrollTop = variables.currentScroll;
+                htmltags.galleryMiniatures.parentElement.scrollTop = variables.currentScroll;
             correctPositionVertical();
             variables.isPrevLayoutGorizontal = false;
-            variables.currentScroll = galleryMiniatures.parentElement.scrollTop;
+            variables.currentScroll = htmltags.galleryMiniatures.parentElement.scrollTop;
         }
     }
     variables.isPreviousSmallLayout = variables.isSmallLayout;
