@@ -158,6 +158,7 @@ function back() {
     galleryLarge.className = "gallery_large gallery_large_hide";
     imageLargeSpinnner.className = "sk-fading-circle sk-fading-circle_hide";
     galleryMiniatures.className = "gallery_miniatures";
+    imageLarge.removeAttribute("src");
     variables.isPrevLayoutLarge = false;
     var sizes = getSizes();
     var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - galleryMiniatures.offsetTop;
