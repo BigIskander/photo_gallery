@@ -1,4 +1,6 @@
-// some variables
+// source: https://github.com/BigIskander/photo_gallery
+// MIT License
+// Copyright (c) 2024 Iskander Sultanov
 
 function galleryCreate(id, images) {
     //create gallery

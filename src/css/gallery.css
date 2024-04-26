@@ -1,3 +1,7 @@
+/* source: https://github.com/BigIskander/photo_gallery */
+/* MIT License */
+/* Copyright (c) 2024 Iskander Sultanov */
+
 .gallery_wrap {
     display: flex;
     justify-content: center;
