@@ -2,8 +2,9 @@
 // MIT License
 // Copyright (c) 2024 Iskander Sultanov
 
-function galleryCreate(id, images) {
+function galleryCreate(id, images, name="") {
     //create gallery
+    var backText = "Назад к списку фото.";
     var galleryWrap = document.getElementById(id);
     galleryWrap.className = "gallery_wrap";
     var galleryAndText = galleryWrap.appendChild(document.createElement("div"));
@@ -17,7 +18,7 @@ function galleryCreate(id, images) {
     var galleryBackLink = galleryBack.appendChild(document.createElement("a"));
     galleryBackLink.href = "JavaScript:void(0);";
     galleryBackLink.className = "gallery_back_link";
-    galleryBackLink.innerText = "Назад к списку фото.";
+    galleryBackLink.innerText = backText;
     var galleryLargeContainerWrap = galleryLarge.appendChild(document.createElement("div"));
     galleryLargeContainerWrap.className = "gallery_large_container_wrap";
     var galleryLargeContainer = galleryLargeContainerWrap.appendChild(document.createElement("div"));
@@ -48,7 +49,7 @@ function galleryCreate(id, images) {
 
     var variables = {
         isBottomText: true,
-        galleryName: "My gallery...", 
+        galleryName: name, 
         sizes: {
             small: {
                 galleryMinWidth: 325,
