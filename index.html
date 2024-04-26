@@ -5,23 +5,50 @@
         <title>Photo gallery.</title>
         <meta name="description" content="Photo gallery, vanilla JS script.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- gallery script -->
         <link rel="stylesheet" href="/src/css/loading.css">
         <link rel="stylesheet" href="/src/css/gallery.css">
-        <script src="/src/js/json_variable.js"></script>
         <script src="/src/js/gallery.js"></script>
+        <!-- images for example -->
+        <script src="/src/js/json_variable.js"></script>
+        <!-- zoom in script copied from personal website -->
+        <link rel="stylesheet" href="/src/css/zoom_in_out.css">
+        <script src="/src/js/zoom_in_out.js"></script>
     </head>
     <body>
         <div id="content">
             <!--  style="display: flex; justify-content: center;" -->
             <div id="gallery"></div>
             <script>
-                galleryCreate("gallery", images, "My gallery...");
+                galleryCreate("gallery", images, "My gallery...", zoomInImage);
             </script>
             <!-- Add second instance for test -->
             <div id="gallery2"></div>
             <script>
                 galleryCreate("gallery2", images.reverse(), "My gallery...");
             </script>
+        </div>
+        <!-- This part (below) is copied from my personal website: https://bigiskander.github.io -->
+        <div class="image_zoom_div">
+            <img class="image_zoom_preload" />
+            <img class="image_zoom" />
+            <div class="zoom_me_out">Нажмите на изображение чтобы уменьшить.</div>
+            <a target="_blank" class="image_zoom_open_url">Открыть изображение в новой вкладке.</a></div>
+        </div>
+        <!-- https://tobiasahlin.com/spinkit/ //-->
+        <div class="sk-fading-circle" id="loadingSpinner" style="visibility: hidden; overflow: clip;">
+            <div class="sk-circle1 sk-circle"></div>
+            <div class="sk-circle2 sk-circle"></div>
+            <div class="sk-circle3 sk-circle"></div>
+            <div class="sk-circle4 sk-circle"></div>
+            <div class="sk-circle5 sk-circle"></div>
+            <div class="sk-circle6 sk-circle"></div>
+            <div class="sk-circle7 sk-circle"></div>
+            <div class="sk-circle8 sk-circle"></div>
+            <div class="sk-circle9 sk-circle"></div>
+            <div class="sk-circle10 sk-circle"></div>
+            <div class="sk-circle11 sk-circle"></div>
+            <div class="sk-circle12 sk-circle"></div>
         </div>
     </body>
 </html>
