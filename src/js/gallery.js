@@ -2,7 +2,7 @@
 // MIT License
 // Copyright (c) 2024 Iskander Sultanov
 
-function galleryCreate(id, images, name="") {
+function galleryCreate(id, images, name="", zoomInFunction = undefined) {
     //create gallery
     var backText = "Назад к списку фото.";
     var galleryWrap = document.getElementById(id);
@@ -25,6 +25,10 @@ function galleryCreate(id, images, name="") {
     galleryLargeContainer.className = "gallery_large_container";
     var galleryLargeImage = galleryLargeContainer.appendChild(document.createElement("img"));
     galleryLargeImage.className = "gallery_large_image";
+    if(zoomInFunction) {
+        galleryLargeImage.style.cursor = "zoom-in";
+        galleryLargeImage.addEventListener("click", function() { zoomInFunction(this); });
+    }
     var galleryLargeSpinner = galleryLargeContainer.appendChild(document.createElement("div"));
     galleryLargeSpinner.className = "sk-fading-circle  sk-fading-circle_hide"; //hide by default
     for(var i = 0; i < 12; i++) {
