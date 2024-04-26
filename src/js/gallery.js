@@ -79,7 +79,7 @@ function galleryCreate(id, images) {
         currentScroll: 0
     }
 
-    galleryBackLink.onclick = () => { galleryBackFunction(htmltags, variables) };
+    galleryBackLink.onclick = function() { galleryBackFunction(htmltags, variables) };
     variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
     variables.isPreviousSmallLayout = variables.isSmallLayout;
     if(variables.isBottomText) htmltags.galleryBottomText.innerText = variables.galleryName;
@@ -96,7 +96,7 @@ function galleryCreate(id, images) {
         miniatureImage.className = "gallery_miniature_image";
         miniatureDivDiv.appendChild(miniatureImage);
         // add event listener to miniature
-        miniatureDiv.addEventListener("click", () => {
+        miniatureDiv.addEventListener("click", function() {
             if(variables.prevSelectedMiniature) 
                 variables.prevSelectedMiniature.className = "gallery_miniature_wrap";
             variables.prevSelectedMiniature = miniatureDiv;
@@ -105,17 +105,17 @@ function galleryCreate(id, images) {
             htmltags.galleryLarge.className = "gallery_large";
             htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
             htmltags.galleryLargeImage.src = image.image;
-            setTimeout(() => {
+            setTimeout(function() {
                 if(htmltags.galleryLargeImage.complete) {
                     htmltags.galleryLargeImage.className = "gallery_large_image";
                 } else {
                     htmltags.galleryLargeImage.className = "gallery_large_image gallery_large_image_hide";
                     htmltags.galleryLargeSpinner.className = "sk-fading-circle";
-                    htmltags.galleryLargeImage.onload = () => {
+                    htmltags.galleryLargeImage.onload = function() {
                         htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
                         htmltags.galleryLargeImage.className = "gallery_large_image";
                     };
-                    htmltags.galleryLargeImage.onerror = () => {
+                    htmltags.galleryLargeImage.onerror = function() {
                         htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
                     }
                 }
@@ -139,7 +139,7 @@ function galleryCreate(id, images) {
         htmltags.galleryMiniatures.appendChild(miniatureDiv);
     }
 
-    window.addEventListener("resize", () => {
+    window.addEventListener("resize", function() {
         variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
         if(variables.isPrevLayoutLarge) {
             if(galleryIsLayoutGorizontal(variables)) {    
