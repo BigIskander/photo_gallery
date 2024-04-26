@@ -158,6 +158,17 @@ function galleryCreate(id, images, name="") {
         htmltags.galleryMiniatures.appendChild(miniatureDiv);
     }
 
+    //add gorizontal scroll on wheel if browser supports
+    if(htmltags.galleryMiniatures.parentElement.onwheel !== undefined) 
+        htmltags.galleryMiniatures.parentElement.addEventListener("wheel", function(event) {
+            if(variables.prevSelectedMiniature) {
+                if(galleryIsLayoutGorizontal(variables)) {
+                    event.preventDefault();
+                    htmltags.galleryMiniatures.parentElement.scrollLeft = htmltags.galleryMiniatures.parentElement.scrollLeft + event.deltaY;
+                }
+            }
+        });
+
     window.addEventListener("resize", function() {
         variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
         if(variables.isPrevLayoutLarge) {
