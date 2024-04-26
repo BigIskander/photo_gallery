@@ -89,13 +89,31 @@ function galleryCreate(id, images, name="") {
     for (const image of images) {
         const miniatureDiv = document.createElement("div");
         miniatureDiv.className = "gallery_miniature_wrap";
-        var miniatureDivDiv = document.createElement("div");
+        const miniatureDivDiv = document.createElement("div");
         miniatureDivDiv.className = "gallery_miniature";
         miniatureDiv.appendChild(miniatureDivDiv);
-        var miniatureImage = new Image();
+        const miniatureImage = new Image();
         miniatureImage.src = image.miniature;
         miniatureImage.className = "gallery_miniature_image";
-        miniatureDivDiv.appendChild(miniatureImage);
+        // image loading
+        setTimeout(function() {
+            if(miniatureImage.complete) {
+                miniatureDivDiv.appendChild(miniatureImage);
+            } else {
+                const gallerySmallSpinner = miniatureDivDiv.appendChild(document.createElement("div"));
+                gallerySmallSpinner.className = "sk-fading-circle"; //hide by default  sk-fading-circle_hide
+                for(var i = 0; i < 12; i++) {
+                    gallerySmallSpinner.appendChild(document.createElement("div")).className = "sk-circle" + (i + 1) + " sk-circle";
+                }
+                miniatureImage.onload = function() {
+                    gallerySmallSpinner.remove();
+                    miniatureDivDiv.appendChild(miniatureImage);
+                }
+                miniatureImage.onerror = function() {
+                    gallerySmallSpinner.remove();
+                }
+            }
+        }, 100);
         // add event listener to miniature
         miniatureDiv.addEventListener("click", function() {
             if(variables.prevSelectedMiniature) 
