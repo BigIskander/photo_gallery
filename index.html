@@ -11,10 +11,16 @@
         <script src="/src/js/gallery.js"></script>
     </head>
     <body>
-        <div id="content" style="display: flex; justify-content: center;">
+        <div id="content">
+            <!--  style="display: flex; justify-content: center;" -->
             <div id="gallery"></div>
             <script>
                 galleryCreate("gallery", images, "My gallery...");
+            </script>
+            <!-- Add second instance for test -->
+            <div id="gallery2"></div>
+            <script>
+                galleryCreate("gallery2", images.reverse(), "My gallery...");
             </script>
         </div>
     </body>
