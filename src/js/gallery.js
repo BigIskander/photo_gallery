@@ -164,7 +164,8 @@ function galleryCreate(id, images, name="") {
             if(variables.prevSelectedMiniature) {
                 if(galleryIsLayoutGorizontal(variables)) {
                     event.preventDefault();
-                    htmltags.galleryMiniatures.parentElement.scrollLeft = htmltags.galleryMiniatures.parentElement.scrollLeft + event.deltaY;
+                    var moveLeft = (event.deltaX != 0) ? event.deltaX : event.deltaY;
+                    htmltags.galleryMiniatures.parentElement.scrollLeft = htmltags.galleryMiniatures.parentElement.scrollLeft + moveLeft;
                 }
             }
         });
