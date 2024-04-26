@@ -6,6 +6,7 @@ var galleryMiniatures = gallery.querySelector(".gallery_miniatures");
 var galleryLarge = gallery.querySelector(".gallery_large");
 galleryLarge.className = "gallery_large gallery_large_hide";
 
+var imageLargeSpinnner = galleryLarge.querySelector(".sk-fading-circle");
 var imageLarge = galleryLarge.querySelector(".gallery_large_image");
 var bottomText = gallery.parentElement.querySelector(".gallery_bottom_text");
 
@@ -65,8 +66,24 @@ for (const image of images) {
         variables.prevSelectedMiniature = miniatureDiv;
         miniatureDiv.className = "gallery_miniature_wrap gallery_miniature_wrap_selected";
         // change large image
-        imageLarge.src = image.image;
         galleryLarge.className = "gallery_large";
+        imageLargeSpinnner.className = "sk-fading-circle sk-fading-circle_hide";
+        imageLarge.src = image.image;
+        setTimeout(() => {
+            if(imageLarge.complete) {
+                imageLarge.className = "gallery_large_image";
+            } else {
+                imageLarge.className = "gallery_large_image gallery_large_image_hide";
+                imageLargeSpinnner.className = "sk-fading-circle";
+                imageLarge.onload = () => {
+                    imageLargeSpinnner.className = "sk-fading-circle sk-fading-circle_hide";
+                    imageLarge.className = "gallery_large_image";
+                };
+                imageLarge.onerror = () => {
+                    imageLargeSpinnner.className = "sk-fading-circle sk-fading-circle_hide";
+                }
+            }
+        }, 100);
         // change gallery layout gallery_miniatures_side
         galleryMiniatures.className = "gallery_miniatures gallery_miniatures_side";
         bottomText.className = "gallery_bottom_text gallery_bottom_text_large";
@@ -102,6 +119,7 @@ function getSizes() {
 function back() {
     prevSelectedPhoto = undefined;
     galleryLarge.className = "gallery_large gallery_large_hide";
+    imageLargeSpinnner.className = "sk-fading-circle sk-fading-circle_hide";
     galleryMiniatures.className = "gallery_miniatures";
     variables.isPrevLayoutLarge = false;
     var sizes = getSizes();

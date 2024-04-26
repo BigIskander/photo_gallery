@@ -63,6 +63,12 @@
     margin: 5px;
 }
 
+.gallery_large_image_hide {
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
+}
+
 .gallery_miniatures_wrap {
     overflow-y: auto; 
     overflow-x: auto;
