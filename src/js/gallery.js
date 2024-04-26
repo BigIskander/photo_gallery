@@ -11,8 +11,8 @@ var imageLarge = galleryLarge.querySelector(".gallery_large_image");
 var bottomText = gallery.parentElement.querySelector(".gallery_bottom_text");
 
 variables = {
-    isBottomText: true, // ok
-    galleryName: "My gallery...", //ok
+    isBottomText: true,
+    galleryName: "My gallery...", 
     sizes: {
         small: {
             galleryMinWidth: 325,
@@ -32,15 +32,15 @@ variables = {
         }
     },
     scrollToPosition: 2, // 0 - 2
-    galleryMediaSwichSize: "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)", //ok
-    galleryMediaSwichLayout: "(max-width: 1122px)", //ok
-    galleryMediaSmallSwichLayout: "(max-width: 581px)", //ok
-    isSmallLayout: false, //ok
-    isPreviousSmallLayout: false, //ok
-    isPrevLayoutLarge: false, //ok
+    galleryMediaSwichSize: "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)",
+    galleryMediaSwichLayout: "(max-width: 1122px)", 
+    galleryMediaSmallSwichLayout: "(max-width: 581px)",
+    isSmallLayout: false,
+    isPreviousSmallLayout: false,
+    isPrevLayoutLarge: false,
     isPrevLayoutGorizontal: false,
-    prevSelectedMiniature: undefined, //ok
-    currentScroll: 0 //ok
+    prevSelectedMiniature: undefined,
+    currentScroll: 0
 }
 
 variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
