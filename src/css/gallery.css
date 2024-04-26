@@ -18,7 +18,7 @@
     margin: 0px;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
 }
 
@@ -146,6 +146,10 @@
 }
 
 @media (max-width: 1122px) {
+    .gallery {
+        flex-wrap: wrap;
+    }
+
     .gallery_miniatures_side {
         width: 650px;
         height: 180px;
@@ -159,6 +163,10 @@
 }
 
 @media (max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px) {
+    .gallery {
+        flex-wrap: nowrap;
+    }
+
     .gallery_and_text {
         max-width: 442px;
         min-width: 325px; 
@@ -205,6 +213,10 @@
     }
 
     @media (max-width: 581px) {
+        .gallery {
+            flex-wrap: wrap;
+        }
+        
         .gallery_miniatures_side {
             width: 325px;
             height: 90px;
