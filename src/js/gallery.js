@@ -38,26 +38,15 @@ function galleryCreate(id, images) {
     var galleryBottomText = galleryBottomTextWrap.appendChild(document.createElement("div"));
     galleryBottomText.className = "gallery_bottom_text";
 
-
-    //
-    // var galleryMiniatures = gallery.querySelector(".gallery_miniatures");
-
-    // var galleryLarge = gallery.querySelector(".gallery_large");
-    // galleryLarge.className = "gallery_large gallery_large_hide";
-
-    // var galleryLargeSpinner = galleryLarge.querySelector(".sk-fading-circle"); //galleryLargeSpinner
-    // var galleryLargeImage = galleryLarge.querySelector(".gallery_large_image"); //galleryLargeImage
-    // var galleryBottomText = gallery.parentElement.querySelector(".gallery_bottom_text"); //galleryBottomText
-
-    htmltags = {
-        galleryMiniatures: galleryMiniatures, //ok
-        galleryLarge: galleryLarge, //ok
-        galleryLargeSpinner: galleryLargeSpinner, //ok
-        galleryLargeImage: galleryLargeImage, //ok
-        galleryBottomText: galleryBottomText //ok
+    var htmltags = {
+        galleryMiniatures: galleryMiniatures,
+        galleryLarge: galleryLarge,
+        galleryLargeSpinner: galleryLargeSpinner,
+        galleryLargeImage: galleryLargeImage,
+        galleryBottomText: galleryBottomText
     }
 
-    variables = {
+    var variables = {
         isBottomText: true,
         galleryName: "My gallery...", 
         sizes: {
