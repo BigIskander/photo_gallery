@@ -79,7 +79,7 @@ function galleryCreate(id, images) {
         currentScroll: 0
     }
 
-    galleryBackLink.onclick = () => { back(htmltags, variables) };
+    galleryBackLink.onclick = () => { galleryBackFunction(htmltags, variables) };
     variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
     variables.isPreviousSmallLayout = variables.isSmallLayout;
     if(variables.isBottomText) htmltags.galleryBottomText.innerText = variables.galleryName;
@@ -123,12 +123,12 @@ function galleryCreate(id, images) {
             // change gallery layout gallery_miniatures_side
             htmltags.galleryMiniatures.className = "gallery_miniatures gallery_miniatures_side";
             htmltags.galleryBottomText.className = "gallery_bottom_text gallery_bottom_text_large";
-            if(isLayoutGorizontal(variables)) {
-                correctPositionGorizontal(htmltags, variables);
+            if(galleryIsLayoutGorizontal(variables)) {
+                galleryCorrectPositionGorizontal(htmltags, variables);
                 variables.isPrevLayoutGorizontal = true;
                 variables.currentScroll = htmltags.galleryMiniatures.parentElement.scrollLeft;
             } else {
-                correctPositionVertical(htmltags, variables);
+                galleryCorrectPositionVertical(htmltags, variables);
                 variables.isPrevLayoutGorizontal = false;
                 variables.currentScroll = htmltags.galleryMiniatures.parentElement.scrollTop;
             }
@@ -142,16 +142,16 @@ function galleryCreate(id, images) {
     window.addEventListener("resize", () => {
         variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
         if(variables.isPrevLayoutLarge) {
-            if(isLayoutGorizontal(variables)) {    
+            if(galleryIsLayoutGorizontal(variables)) {    
                 if(!variables.isPrevLayoutGorizontal)
                     htmltags.galleryMiniatures.parentElement.scrollLeft = variables.currentScroll;
-                correctPositionGorizontal(htmltags, variables);
+                galleryCorrectPositionGorizontal(htmltags, variables);
                 variables.isPrevLayoutGorizontal = true;
                 variables.currentScroll = htmltags.galleryMiniatures.parentElement.scrollLeft;
             } else {
                 if(variables.isPrevLayoutGorizontal)
                     htmltags.galleryMiniatures.parentElement.scrollTop = variables.currentScroll;
-                correctPositionVertical(htmltags, variables);
+                galleryCorrectPositionVertical(htmltags, variables);
                 variables.isPrevLayoutGorizontal = false;
                 variables.currentScroll = htmltags.galleryMiniatures.parentElement.scrollTop;
             }
@@ -160,27 +160,27 @@ function galleryCreate(id, images) {
     });
 }
 
-function isLayoutGorizontal(variables) {
+function galleryIsLayoutGorizontal(variables) {
     var isLargeGorizontal = (!window.matchMedia(variables.galleryMediaSwichSize).matches && window.matchMedia(variables.galleryMediaSwichLayout).matches);
     var isSmallGorizontal = (window.matchMedia(variables.galleryMediaSwichSize).matches && window.matchMedia(variables.galleryMediaSmallSwichLayout).matches);
     return (isLargeGorizontal || isSmallGorizontal);
 }
 
-function getSizes(variables) {
+function galleryGetSizes(variables) {
     if(window.matchMedia(variables.galleryMediaSwichSize).matches)
         return variables.sizes.small;
     else
         return variables.sizes.large;
 }
 
-function back(htmltags, variables) {
+function galleryBackFunction(htmltags, variables) {
     prevSelectedPhoto = undefined;
     htmltags.galleryLarge.className = "gallery_large gallery_large_hide";
     htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
     htmltags.galleryMiniatures.className = "gallery_miniatures";
     htmltags.galleryLargeImage.removeAttribute("src");
     variables.isPrevLayoutLarge = false;
-    var sizes = getSizes(variables);
+    var sizes = galleryGetSizes(variables);
     var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - htmltags.galleryMiniatures.offsetTop;
     var miniaturesScrolled = htmltags.galleryMiniatures.parentElement.scrollTop;
     htmltags.galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize - sizes.overscrollCorrection);
@@ -190,10 +190,10 @@ function back(htmltags, variables) {
     if(variables.isBottomText) htmltags.galleryBottomText.innerText = variables.galleryName;
 }
 
-function correctPositionVertical(htmltags, variables) {
+function galleryCorrectPositionVertical(htmltags, variables) {
     var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - htmltags.galleryMiniatures.offsetTop;
     var miniaturesScrolled = htmltags.galleryMiniatures.parentElement.scrollTop;
-    var sizes = getSizes(variables);
+    var sizes = galleryGetSizes(variables);
     if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
         htmltags.galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * variables.scrollToPosition - sizes.overscrollCorrection);
         return;
@@ -207,10 +207,10 @@ function correctPositionVertical(htmltags, variables) {
     }
 }
 
-function correctPositionGorizontal(htmltags, variables) {
+function galleryCorrectPositionGorizontal(htmltags, variables) {
     var miniatureRelativePosition = variables.prevSelectedMiniature.offsetLeft - htmltags.galleryMiniatures.offsetLeft;
     var miniaturesScrolled = htmltags.galleryMiniatures.parentElement.scrollLeft;
-    var sizes = getSizes(variables);
+    var sizes = galleryGetSizes(variables);
     if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
         htmltags.galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * variables.scrollToPosition - sizes.overscrollCorrection);
         return;
