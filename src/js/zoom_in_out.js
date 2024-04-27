@@ -19,36 +19,11 @@ function zoomInImage(image) {
       if(!zoomedImage.complete) spinner.style.visibility = "visible"
     }
     // calculate image position
-    if(image.naturalHeight > (window.innerHeight * 0.9)
-        || image.naturalWidth > (window.innerWidth * 0.9))
-    {
-        if(image.naturalHeight == image.naturalWidth)
-        {
-            zoomedImageHeight = window.innerHeight * 0.9;
-            zoomedImageWidth = window.innerWidth * 0.9;
-        } else if(image.naturalHeight > image.naturalWidth) {
-            zoomedImageHeight = window.innerHeight * 0.9;
-            zoomedImageWidth = image.naturalWidth * (zoomedImageHeight / image.naturalHeight);
-            if(zoomedImageWidth > (window.innerWidth * 0.9)) {
-              zoomedImageWidth = window.innerWidth * 0.9;
-              zoomedImageHeight = image.naturalHeight * (zoomedImageWidth / image.naturalWidth);
-            }
-        } else {
-            zoomedImageWidth = window.innerWidth * 0.9;
-            zoomedImageHeight = image.naturalHeight * (zoomedImageWidth / image.naturalWidth);
-            if(zoomedImageHeight > (window.innerHeight * 0.9)) {
-              zoomedImageHeight = window.innerHeight * 0.9;
-              zoomedImageWidth = image.naturalWidth * (zoomedImageHeight / image.naturalHeight);
-            }
-        }
-    } else {
-        zoomedImageHeight = image.naturalHeight;
-        zoomedImageWidth = image.naturalWidth;
-    }
-    topAdjust = zoomedImageHeight >= (window.innerHeight * 0.9)
-        ? window.innerHeight * 0.05 : (window.innerHeight - zoomedImageHeight) / 2;
-    leftAdjust = zoomedImageWidth >= (window.innerWidth * 0.9)
-        ? window.innerWidth * 0.05 : (window.innerWidth - zoomedImageWidth) / 2;
+    var diminsions = computeDimensions(image.width, image.height);
+    topAdjust = diminsions.topAdjust;
+    leftAdjust = diminsions.leftAdjust;
+    zoomedImageHeight = diminsions.zoomedImageHeight;
+    zoomedImageWidth = diminsions.zoomedImageWidth;
     // set images position
     zoomedImage.style.height = zoomedImageHeight + "px";
     zoomedImage.style.width = zoomedImageWidth + "px";
@@ -122,7 +97,7 @@ function computeDimensions(width, height) {
   if(height > (window.innerHeight * 0.9)
     || width > (window.innerWidth * 0.9))
   {
-    if(height == image.naturalWidth) {
+    if(height == width) {
       zoomedImageHeight = window.innerHeight * 0.9;
       zoomedImageWidth = window.innerWidth * 0.9;
     } else if(height > width) {
