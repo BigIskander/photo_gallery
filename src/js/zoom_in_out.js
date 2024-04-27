@@ -118,5 +118,43 @@ function zoomOutImage() {
     }
 }
 
+function computeDimensions(width, height) {
+  if(height > (window.innerHeight * 0.9)
+    || width > (window.innerWidth * 0.9))
+  {
+    if(height == image.naturalWidth) {
+      zoomedImageHeight = window.innerHeight * 0.9;
+      zoomedImageWidth = window.innerWidth * 0.9;
+    } else if(height > width) {
+      zoomedImageHeight = window.innerHeight * 0.9;
+      zoomedImageWidth = width * (zoomedImageHeight / height);
+      if(zoomedImageWidth > (window.innerWidth * 0.9)) {
+        zoomedImageWidth = window.innerWidth * 0.9;
+        zoomedImageHeight = height * (zoomedImageWidth / width);
+      }
+    } else {
+      zoomedImageWidth = width * 0.9;
+      zoomedImageHeight = height * (zoomedImageWidth / width);
+      if(zoomedImageHeight > (window.innerHeight * 0.9)) {
+        zoomedImageHeight = window.innerHeight * 0.9;
+        zoomedImageWidth = width * (zoomedImageHeight / height);
+      }
+    }
+  } else {
+    zoomedImageHeight = height;
+    zoomedImageWidth = width;
+  }
+  topAdjust = zoomedImageHeight >= (window.innerHeight * 0.9)
+    ? window.innerHeight * 0.05 : (window.innerHeight - zoomedImageHeight) / 2;
+  leftAdjust = zoomedImageWidth >= (window.innerWidth * 0.9)
+    ? window.innerWidth * 0.05 : (window.innerWidth - zoomedImageWidth) / 2;
+  return {
+    topAdjust: topAdjust,
+    leftAdjust: leftAdjust,
+    zoomedImageHeight: zoomedImageHeight,
+    zoomedImageWidth: zoomedImageWidth
+  };
+}
+
 window.addEventListener("resize", function() { zoomOutImage(); });
 window.addEventListener("scroll", function() { zoomOutImage(); });
