@@ -118,5 +118,5 @@ function zoomOutImage() {
     }
 }
 
-document.addEventListener("resize", function() { zoomOutImage(); });
-document.addEventListener("scroll", function() { zoomOutImage(); });
+window.addEventListener("resize", function() { zoomOutImage(); });
+window.addEventListener("scroll", function() { zoomOutImage(); });
