@@ -133,3 +133,18 @@ function computeDimensions(width, height) {
 
 window.addEventListener("resize", function() { zoomOutImage(); });
 window.addEventListener("scroll", function() { zoomOutImage(); });
+
+(function() {
+  test_cases = [
+    { width: 1000, height: 1000 }, 
+    { width: 50, height: 50 },
+    { width: 2000, height: 50 },
+    { width: 50, height: 2000 }
+  ]
+  console.log(window.innerWidth * 0.9);
+  console.log(window.innerHeight * 0.9);
+  test_cases.forEach(test => {
+    console.log(test.width, test.height);
+    console.log(computeDimensions(test.width, test.height));
+  });
+})();
