@@ -127,7 +127,12 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
             // change large image
             htmltags.galleryLarge.className = "gallery_large";
             htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
-            htmltags.galleryLargeImage.src = image.image;
+            if(zoomInFunction && image.large) {
+                htmltags.galleryLargeImage.srcset=image.image + " 640w";
+                htmltags.galleryLargeImage.src = image.large;
+            } else {
+                htmltags.galleryLargeImage.src = image.image;
+            }
             setTimeout(function() {
                 if(htmltags.galleryLargeImage.complete) {
                     htmltags.galleryLargeImage.className = "gallery_large_image";
