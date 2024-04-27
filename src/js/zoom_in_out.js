@@ -98,8 +98,9 @@ function computeDimensions(width, height) {
     || width > (window.innerWidth * 0.9))
   {
     if(height == width) {
-      zoomedImageHeight = window.innerHeight * 0.9;
-      zoomedImageWidth = window.innerWidth * 0.9;
+      shorterSide = (window.innerHeight < window.innerWidth) ? window.innerHeight : window.innerWidth;
+      zoomedImageHeight = shorterSide * 0.9;
+      zoomedImageWidth = shorterSide * 0.9;
     } else if(height > width) {
       zoomedImageHeight = window.innerHeight * 0.9;
       zoomedImageWidth = width * (zoomedImageHeight / height);
@@ -108,7 +109,7 @@ function computeDimensions(width, height) {
         zoomedImageHeight = height * (zoomedImageWidth / width);
       }
     } else {
-      zoomedImageWidth = width * 0.9;
+      zoomedImageWidth = window.innerWidth * 0.9;
       zoomedImageHeight = height * (zoomedImageWidth / width);
       if(zoomedImageHeight > (window.innerHeight * 0.9)) {
         zoomedImageHeight = window.innerHeight * 0.9;
@@ -133,18 +134,3 @@ function computeDimensions(width, height) {
 
 window.addEventListener("resize", function() { zoomOutImage(); });
 window.addEventListener("scroll", function() { zoomOutImage(); });
-
-(function() {
-  test_cases = [
-    { width: 1000, height: 1000 }, 
-    { width: 50, height: 50 },
-    { width: 2000, height: 50 },
-    { width: 50, height: 2000 }
-  ]
-  console.log(window.innerWidth * 0.9);
-  console.log(window.innerHeight * 0.9);
-  test_cases.forEach(test => {
-    console.log(test.width, test.height);
-    console.log(computeDimensions(test.width, test.height));
-  });
-})();
