@@ -16,6 +16,8 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
 	margin: 0px;
 	max-width: 90%;
 	max-height: 90%;
@@ -49,6 +51,8 @@
 	left: 50%;
 	transform: translate(-50%);
 	-webkit-transform: translate(-50%);
+	-moz-transform: translate(-50%);
+	-o-transform: translate(-50%);
 	background-color: #2b2a2a;
 	color: #FFFFFF;
 	padding: 5px;
@@ -76,5 +80,7 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
 	visibility: hidden;
 }
