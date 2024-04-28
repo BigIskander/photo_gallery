@@ -9,7 +9,10 @@ function zoomInImage(image) {
 	zoomedImageLink.setAttribute("href", image.src);
 	loadingSpinner = imageZoomDiv.querySelector(".image_loading_spinner");
 	//
+	imageZoomDiv.style.top = window.scrollY + "px";
+	imageZoomDiv.style.left = window.scrollX + "px";
 	imageZoomDiv.style.visibility = "visible";
+	zoomed = true;
 	isImagePreload = false;
 	zoomedImage.onload = function() {
 		isImagePreload = true;
@@ -36,17 +39,12 @@ function zoomInImage(image) {
 	}
 	setTimeout(function() {
 		if(!isImagePreload) loadingSpinner.style.visibility = "visible";
-		zoomedImagePreload.onclick = function() {
-			zoomOutImage()
-		}
-		zoomedImage.onclick = function() {
-			zoomOutImage()
-		}
 	}, 200);
+	document.body.style.overflow = "hidden";
 }
 
 function zoomOutImage() {
-	// if(zoomed) {
+	if(zoomed) {
 		imageZoomDiv = document.querySelector(".image_zoom_div");
 		zoomedImage = imageZoomDiv.querySelector(".image_zoom");
 		zoomedImagePreload = imageZoomDiv.querySelector(".image_zoom_preload");
@@ -60,8 +58,10 @@ function zoomOutImage() {
 		zoomedImagePreload.removeAttribute("src");
 		zoomedImage.removeAttribute("src");
 		zoomedImageLink.removeAttribute("href");
-	// }
+		document.body.style.removeProperty("overflow");
+		imageZoomDiv.style.removeProperty("top");
+		imageZoomDiv.style.removeProperty("left");
+		zoomed = false;
+	}
 }
 
-// window.addEventListener("resize", function() { zoomOutImage(); });
-// window.addEventListener("scroll", function() { zoomOutImage(); });

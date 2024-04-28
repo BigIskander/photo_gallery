@@ -20,20 +20,23 @@
 	margin: 0px;
 	max-width: 90%;
 	max-height: 90%;
-	cursor: zoom-out;
 	visibility: hidden;
 }
 
 .zoom_me_out {
 	position: absolute;
 	top: 0px;
-	width: 100%;
-	font-size: 0.8em;
-	text-align: center;
-	background-color: rgb(0, 0, 0);
-	color: rgb(255, 255, 255);
-	line-height: 1.25;
-	font-size: 1em;
+	right: 0px;
+	background-color: #2b2a2a;
+	color: #FFFFFF;
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	height: 3%;
+	border-radius: 5px;
+	margin: 0px;
+	white-space: nowrap;
+	white-space: pre;
 }
 
 .image_zoom_open_url {
