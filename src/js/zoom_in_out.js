@@ -11,6 +11,8 @@ function zoomInImage(image) {
 	//
 	imageZoomDiv.style.top = window.scrollY + "px";
 	imageZoomDiv.style.left = window.scrollX + "px";
+	imageZoomDiv.style.width = window.innerWidth + "px";
+	imageZoomDiv.style.height = window.innerHeight + "px";
 	imageZoomDiv.style.visibility = "visible";
 	zoomed = true;
 	isImagePreload = false;
@@ -40,7 +42,6 @@ function zoomInImage(image) {
 	setTimeout(function() {
 		if(!isImagePreload) loadingSpinner.style.visibility = "visible";
 	}, 200);
-	document.body.style.overflow = "hidden";
 }
 
 function zoomOutImage() {
@@ -58,10 +59,13 @@ function zoomOutImage() {
 		zoomedImagePreload.removeAttribute("src");
 		zoomedImage.removeAttribute("src");
 		zoomedImageLink.removeAttribute("href");
-		document.body.style.removeProperty("overflow");
 		imageZoomDiv.style.removeProperty("top");
 		imageZoomDiv.style.removeProperty("left");
+		imageZoomDiv.style.removeProperty("width");
+		imageZoomDiv.style.removeProperty("height");
 		zoomed = false;
 	}
 }
 
+window.addEventListener("resize", function() { zoomOutImage(); });
+window.addEventListener("scroll", function() { zoomOutImage(); });
