@@ -226,6 +226,7 @@ function galleryBackFunction(htmltags, variables) {
     htmltags.galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize - sizes.overscrollCorrection);
     if(variables.prevSelectedMiniature) 
         variables.prevSelectedMiniature.className = "gallery_miniature_wrap";
+    variables.prevSelectedMiniature = undefined;
     htmltags.galleryBottomText.className = "gallery_bottom_text";
     if(variables.isBottomText) htmltags.galleryBottomText.innerText = variables.galleryName;
 }
