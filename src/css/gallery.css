@@ -232,7 +232,7 @@
         width: 100%;
     }
 
-    @media (max-width: 581px) {
+    @media (max-width: 596px) {
         .gallery {
             flex-wrap: wrap;
         }
