@@ -73,8 +73,8 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
             }
         },
         scrollToPosition: 2, // 0 - 2
-        galleryMediaSwichSize: "(max-width: 850px), (max-height: 750px), (max-width: 1125px) and (max-height: 925px)",
-        galleryMediaSwichLayout: "(max-width: 1122px)", 
+        galleryMediaSwichSize: "(max-width: 850px), (max-height: 750px), (max-width: 1136px) and (max-height: 925px)",
+        galleryMediaSwichLayout: "(max-width: 1136px)", 
         galleryMediaSmallSwichLayout: "(max-width: 581px)",
         isSmallLayout: false,
         isPreviousSmallLayout: false,
