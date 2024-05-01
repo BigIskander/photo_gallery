@@ -98,6 +98,7 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
         miniatureDiv.appendChild(miniatureDivDiv);
         const miniatureImage = new Image();
         miniatureImage.src = image.miniature;
+        miniatureImage.alt = image.name;
         miniatureImage.className = "gallery_miniature_image";
         // image loading
         setTimeout(function() {
@@ -133,6 +134,7 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
             } else {
                 htmltags.galleryLargeImage.src = image.image;
             }
+            htmltags.galleryLargeImage.alt = image.name;
             setTimeout(function() {
                 if(htmltags.galleryLargeImage.complete) {
                     htmltags.galleryLargeImage.className = "gallery_large_image";
@@ -219,6 +221,8 @@ function galleryBackFunction(htmltags, variables) {
     htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
     htmltags.galleryMiniatures.className = "gallery_miniatures";
     htmltags.galleryLargeImage.removeAttribute("src");
+    htmltags.galleryLargeImage.removeAttribute("srcset");
+    htmltags.galleryLargeImage.removeAttribute("alt");
     variables.isPrevLayoutLarge = false;
     var sizes = galleryGetSizes(variables);
     var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - htmltags.galleryMiniatures.offsetTop;

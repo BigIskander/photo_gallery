@@ -28,6 +28,7 @@ function zoomInImage(image) {
 	}
 	zoomedImagePreload.onload = function() {
 		zoomedImage.src = image.src;
+		if(image.alt) zoomedImage.alt = image.alt;
 		zoomedImagePreload.style.visibility = "visible";
 	}
 	zoomedImagePreload.onerror = function() {
@@ -36,8 +37,10 @@ function zoomInImage(image) {
 	}
 	if(image.currentSrc && image.currentSrc!=image.src) {
 		zoomedImagePreload.src = image.currentSrc;
+		if(image.alt) zoomedImagePreload.alt = image.alt;
 	} else {
 		zoomedImage.src = image.src;
+		if(image.alt) zoomedImage.alt = image.alt;
 	}
 	setTimeout(function() {
 		if(!isImagePreload) loadingSpinner.style.visibility = "visible";
@@ -57,7 +60,9 @@ function zoomOutImage() {
 		zoomedImagePreload.style.visibility = "hidden";
 		zoomedImage.style.visibility = "hidden";
 		zoomedImagePreload.removeAttribute("src");
+		zoomedImagePreload.removeAttribute("alt");
 		zoomedImage.removeAttribute("src");
+		zoomedImage.removeAttribute("alt");
 		zoomedImageLink.removeAttribute("href");
 		imageZoomDiv.style.removeProperty("top");
 		imageZoomDiv.style.removeProperty("left");
