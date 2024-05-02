@@ -29,8 +29,9 @@ width: 15%;
 height: 15%;
 background-color: #333;
 border-radius: 100%;
--webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
-        animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
+/* -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
+        animation: sk-circleFadeDelay 1.2s infinite ease-in-out both; */
+/* turned off animation because of hight CPU usage */
 }
 
 /* color for dark theme */
