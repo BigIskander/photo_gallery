@@ -166,6 +166,10 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
             if(variables.isBottomText) htmltags.galleryBottomText.innerText = image.name;
             variables.isPrevLayoutLarge = true;
         });
+        miniatureDiv.addEventListener("keypress", function(event) {
+            if(event.key == 'Enter') this.click();
+        });
+        miniatureDiv.tabIndex = 0;
         htmltags.galleryMiniatures.appendChild(miniatureDiv);
     }
 
