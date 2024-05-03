@@ -1,5 +1,7 @@
 # photo_gallery
 
+[In english](README_ENG.md)
+
 Это скрипт фотогалереи, написанный на JavaScript без применения какого либо фреймворка.
 
 Демонстрация работы этого скрипта доступна на моем сайте по [этой ссылке](https://bigiskander.github.io/galleryscript).
