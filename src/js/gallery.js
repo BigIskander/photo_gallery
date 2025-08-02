@@ -63,6 +63,14 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
                 overscrollCorrection: 9,
                 underscrollCorrection: 3
             },
+            medium: {
+                galleryMinWidth: 488,
+                galleryMaxWidth: 663,
+                galleryHeight: 525,
+                gallerySelectedMiniatureSize: 123, // miniature cube + border    
+                overscrollCorrection: 7,
+                underscrollCorrection: 2
+            },
             large: {
                 galleryMinWidth: 650,
                 galleryMaxWidth: 850,
@@ -74,10 +82,12 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
         },
         scrollToPosition: 2, // 0 - 2
         galleryMediaSwichSize: "(max-width: 850px), (max-height: 750px), (max-width: 1136px) and (max-height: 925px)",
+        galleryMediaSwichSize2: "(max-width: 637px), (max-height: 562px), (max-width: 894px) and (max-height: 693px)",
         galleryMediaSwichLayout: "(max-width: 1136px)", 
+        galleryMediaSwichLayout2: "(max-width: 894px)",
         galleryMediaSmallSwichLayout: "(max-width: 596px)",
-        isSmallLayout: false,
-        isPreviousSmallLayout: false,
+        layoutType: "large",
+        previousLayoutType: "large",
         isPrevLayoutLarge: false,
         isPrevLayoutGorizontal: false,
         prevSelectedMiniature: undefined,
@@ -85,8 +95,8 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
     }
 
     galleryBackLink.onclick = function() { galleryBackFunction(htmltags, variables) };
-    variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
-    variables.isPreviousSmallLayout = variables.isSmallLayout;
+    variables.layoutType = galleryGetLayoutType(variables);
+    variables.previousLayoutType = variables.layoutType;
     if(variables.isBottomText) htmltags.galleryBottomText.innerText = variables.galleryName;
 
     // create miniatures
@@ -186,7 +196,7 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
         });
 
     window.addEventListener("resize", function() {
-        variables.isSmallLayout = window.matchMedia(variables.galleryMediaSwichSize).matches;
+        variables.layoutType = galleryGetLayoutType(variables);
         if(variables.isPrevLayoutLarge) {
             if(galleryIsLayoutGorizontal(variables)) {    
                 if(!variables.isPrevLayoutGorizontal)
@@ -202,19 +212,32 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
                 variables.currentScroll = htmltags.galleryMiniatures.parentElement.scrollTop;
             }
         }
-        variables.isPreviousSmallLayout = variables.isSmallLayout;
+        variables.previousLayoutType = variables.layoutType;
     });
 }
 
 function galleryIsLayoutGorizontal(variables) {
-    var isLargeGorizontal = (!window.matchMedia(variables.galleryMediaSwichSize).matches && window.matchMedia(variables.galleryMediaSwichLayout).matches);
-    var isSmallGorizontal = (window.matchMedia(variables.galleryMediaSwichSize).matches && window.matchMedia(variables.galleryMediaSmallSwichLayout).matches);
-    return (isLargeGorizontal || isSmallGorizontal);
+    var layoutType = galleryGetLayoutType(variables);
+    var isLargeGorizontal = (layoutType == "large" && window.matchMedia(variables.galleryMediaSwichLayout).matches);
+    var isMediumGorizontal = (layoutType == "medium" && window.matchMedia(variables.galleryMediaSwichLayout2).matches);
+    var isSmallGorizontal = (layoutType == "small" && window.matchMedia(variables.galleryMediaSmallSwichLayout).matches);
+    return (isLargeGorizontal || isMediumGorizontal || isSmallGorizontal);
+}
+
+function galleryGetLayoutType(variables) {
+    if(window.matchMedia(variables.galleryMediaSwichSize2).matches)
+        return "small";
+    else if(window.matchMedia(variables.galleryMediaSwichSize).matches)
+        return "medium";
+    else
+        return "large";
 }
 
 function galleryGetSizes(variables) {
-    if(window.matchMedia(variables.galleryMediaSwichSize).matches)
-        return variables.sizes.small;
+    if(window.matchMedia(variables.galleryMediaSwichSize2).matches)
+        return variables.sizes.small
+    else if(window.matchMedia(variables.galleryMediaSwichSize).matches)
+        return variables.sizes.medium;
     else
         return variables.sizes.large;
 }
@@ -243,7 +266,7 @@ function galleryCorrectPositionVertical(htmltags, variables) {
     var miniatureRelativePosition = variables.prevSelectedMiniature.offsetTop - htmltags.galleryMiniatures.offsetTop;
     var miniaturesScrolled = htmltags.galleryMiniatures.parentElement.scrollTop;
     var sizes = galleryGetSizes(variables);
-    if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
+    if(!variables.isPrevLayoutLarge || (variables.previousLayoutType != variables.layoutType)) {
         htmltags.galleryMiniatures.parentElement.scrollTop = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * variables.scrollToPosition - sizes.overscrollCorrection);
         return;
     }
@@ -260,7 +283,7 @@ function galleryCorrectPositionGorizontal(htmltags, variables) {
     var miniatureRelativePosition = variables.prevSelectedMiniature.offsetLeft - htmltags.galleryMiniatures.offsetLeft;
     var miniaturesScrolled = htmltags.galleryMiniatures.parentElement.scrollLeft;
     var sizes = galleryGetSizes(variables);
-    if(!variables.isPrevLayoutLarge || (variables.isPreviousSmallLayout != variables.isSmallLayout)) {
+    if(!variables.isPrevLayoutLarge || (variables.previousLayoutType != variables.layoutType)) {
         htmltags.galleryMiniatures.parentElement.scrollLeft = miniaturesScrolled + (miniatureRelativePosition - miniaturesScrolled - sizes.gallerySelectedMiniatureSize * variables.scrollToPosition - sizes.overscrollCorrection);
         return;
     }
