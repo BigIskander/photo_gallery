@@ -15,8 +15,9 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
     galleryLarge.className = "gallery_large gallery_large_hide"; //hide by default
     var galleryBack = galleryLarge.appendChild(document.createElement("div"));
     galleryBack.className = "gallery_back";
-    var galleryBackLink = galleryBack.appendChild(document.createElement("a"));
-    galleryBackLink.href = "JavaScript:void(0);";
+    var galleryBackLink = galleryBack.appendChild(document.createElement("span"));
+    // galleryBackLink.href = "JavaScript:void(0);";
+    galleryBackLink.tabIndex = "0";
     galleryBackLink.className = "gallery_back_link";
     galleryBackLink.innerText = backText;
     var galleryLargeContainerWrap = galleryLarge.appendChild(document.createElement("div"));
@@ -95,6 +96,9 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
     }
 
     galleryBackLink.onclick = function() { galleryBackFunction(htmltags, variables) };
+    galleryBackLink.addEventListener("keypress", function(event) {
+        if(event.key == 'Enter') this.click();
+    });
     variables.layoutType = galleryGetLayoutType(variables);
     variables.previousLayoutType = variables.layoutType;
     if(variables.isBottomText) htmltags.galleryBottomText.innerText = variables.galleryName;

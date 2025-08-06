@@ -50,6 +50,12 @@
 
 .gallery_back_link {
     color: black;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.gallery_back_link:hover {
+    text-decoration: underline double;
 }
 
 .dark .gallery_back_link {
