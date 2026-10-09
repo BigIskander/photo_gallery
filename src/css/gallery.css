@@ -105,6 +105,8 @@
     flex-wrap: wrap;
     justify-content: center;
     height: 700px;
+    align-items: flex-start;
+    align-content: flex-start;
 }
 
 .gallery_miniatures_side {
