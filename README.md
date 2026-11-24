@@ -11,7 +11,6 @@
 В минимальном варианте. В раздел **head**, html документа, добавить:
 
 ```html
-<link rel="stylesheet" href="/src/css/loading.css">
 <link rel="stylesheet" href="/src/css/gallery.css">
 <script src="/src/js/gallery.js"></script>
 ```

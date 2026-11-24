@@ -30,11 +30,6 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
         galleryLargeImage.style.cursor = "zoom-in";
         galleryLargeImage.addEventListener("click", function() { zoomInFunction(this); });
     }
-    var galleryLargeSpinner = galleryLargeContainer.appendChild(document.createElement("div"));
-    galleryLargeSpinner.className = "sk-fading-circle  sk-fading-circle_hide"; //hide by default
-    for(var i = 0; i < 12; i++) {
-        galleryLargeSpinner.appendChild(document.createElement("div")).className = "sk-circle" + (i + 1) + " sk-circle";
-    }
     var galleryMiniaturesWrap = gallery.appendChild(document.createElement("div"));
     galleryMiniaturesWrap.className = "gallery_miniatures_wrap";
     var galleryMiniatures = galleryMiniaturesWrap.appendChild(document.createElement("div"));
@@ -47,7 +42,6 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
     var htmltags = {
         galleryMiniatures: galleryMiniatures,
         galleryLarge: galleryLarge,
-        galleryLargeSpinner: galleryLargeSpinner,
         galleryLargeImage: galleryLargeImage,
         galleryBottomText: galleryBottomText
     }
@@ -114,22 +108,17 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
         miniatureImage.src = image.miniature;
         miniatureImage.alt = image.name;
         miniatureImage.className = "gallery_miniature_image";
+        miniatureImage.loading = "lazy";
+        miniatureDivDiv.appendChild(miniatureImage);
         // image loading
-        setTimeout(function() {
-            if(miniatureImage.complete) {
-                miniatureDivDiv.appendChild(miniatureImage);
-            } else {
-                const gallerySmallSpinner = miniatureDivDiv.appendChild(document.createElement("div"));
-                gallerySmallSpinner.className = "sk-fading-circle"; //hide by default  sk-fading-circle_hide
-                for(var i = 0; i < 12; i++) {
-                    gallerySmallSpinner.appendChild(document.createElement("div")).className = "sk-circle" + (i + 1) + " sk-circle";
-                }
+        setTimeout(function() {    
+            if(!miniatureImage.complete) {
+                miniatureDiv.classList.add("gallery_image_loading");
                 miniatureImage.onload = function() {
-                    gallerySmallSpinner.remove();
-                    miniatureDivDiv.appendChild(miniatureImage);
+                    miniatureDiv.classList.remove("gallery_image_loading");
                 }
                 miniatureImage.onerror = function() {
-                    gallerySmallSpinner.remove();
+                    miniatureDiv.classList.remove("gallery_image_loading");
                 }
             }
         }, 100);
@@ -141,7 +130,7 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
             miniatureDiv.className = "gallery_miniature_wrap gallery_miniature_wrap_selected";
             // change large image
             htmltags.galleryLarge.className = "gallery_large";
-            htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
+            htmltags.galleryLarge.classList.remove("gallery_image_loading");
             if(zoomInFunction && image.large) {
                 htmltags.galleryLargeImage.srcset=image.image + " 640w";
                 htmltags.galleryLargeImage.src = image.large;
@@ -154,13 +143,13 @@ function galleryCreate(id, images, name="", zoomInFunction = undefined) {
                     htmltags.galleryLargeImage.className = "gallery_large_image";
                 } else {
                     htmltags.galleryLargeImage.className = "gallery_large_image gallery_large_image_hide";
-                    htmltags.galleryLargeSpinner.className = "sk-fading-circle";
+                    htmltags.galleryLarge.classList.add("gallery_image_loading");
                     htmltags.galleryLargeImage.onload = function() {
-                        htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
+                        htmltags.galleryLarge.classList.remove("gallery_image_loading");
                         htmltags.galleryLargeImage.className = "gallery_large_image";
                     };
                     htmltags.galleryLargeImage.onerror = function() {
-                        htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
+                        htmltags.galleryLarge.classList.remove("gallery_image_loading");
                     }
                 }
             }, 100);
@@ -249,7 +238,7 @@ function galleryGetSizes(variables) {
 function galleryBackFunction(htmltags, variables) {
     prevSelectedPhoto = undefined;
     htmltags.galleryLarge.className = "gallery_large gallery_large_hide";
-    htmltags.galleryLargeSpinner.className = "sk-fading-circle sk-fading-circle_hide";
+    htmltags.galleryLarge.classList.remove("gallery_image_loading");
     htmltags.galleryMiniatures.className = "gallery_miniatures";
     htmltags.galleryLargeImage.removeAttribute("src");
     htmltags.galleryLargeImage.removeAttribute("srcset");
